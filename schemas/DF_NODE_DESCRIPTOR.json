@@ -1,0 +1,97 @@
+{
+  "$id": "https://df.local/schema/DF_NODE_DESCRIPTOR.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "properties": {
+    "execution_label": {
+      "pattern": "^CLASSICAL_",
+      "type": "string"
+    },
+    "feature_classes": {
+      "additionalProperties": {
+        "enum": [
+          "SUPPORTED",
+          "SUPPORTED_WITH_LIMITS",
+          "APPROXIMATE",
+          "TARGET_SPECIFIC",
+          "UNSUPPORTED"
+        ]
+      },
+      "type": "object"
+    },
+    "node_id": {
+      "enum": [
+        "N_SMALL",
+        "N_MEDIUM",
+        "N_LARGE",
+        "N_XLARGE"
+      ]
+    },
+    "physical": {
+      "properties": {
+        "physical_distributed": {
+          "const": false
+        },
+        "physical_parallel": {
+          "const": false
+        },
+        "physical_qpu": {
+          "const": false
+        }
+      },
+      "required": [
+        "physical_qpu",
+        "physical_parallel",
+        "physical_distributed"
+      ],
+      "type": "object"
+    },
+    "resource_limits": {
+      "properties": {
+        "ebit_budget": {
+          "const": 0
+        },
+        "qpu_slots": {
+          "const": 0
+        }
+      },
+      "required": [
+        "cpu_slots",
+        "memory_bytes",
+        "qpu_slots",
+        "ebit_budget"
+      ],
+      "type": "object"
+    },
+    "schema": {
+      "const": "DF/NODE_DESCRIPTOR/1"
+    },
+    "trust_domain": {
+      "enum": [
+        "LOCAL_TRUSTED",
+        "LOCAL_UNTRUSTED"
+      ]
+    }
+  },
+  "required": [
+    "schema",
+    "df_release",
+    "node_id",
+    "container",
+    "worker_id",
+    "domain_id",
+    "group_id",
+    "failure_domain",
+    "trust_domain",
+    "execution_label",
+    "target_id",
+    "vm",
+    "adapter",
+    "resource_limits",
+    "feature_classes",
+    "bounds",
+    "physical",
+    "self_reported"
+  ],
+  "title": "DF fabric node descriptor",
+  "type": "object"
+}

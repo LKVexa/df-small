@@ -1,0 +1,63 @@
+{
+  "$id": "https://df.local/schema/DF_GATE_RESULTS.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "properties": {
+    "gates": {
+      "items": {
+        "properties": {
+          "seconds": {
+            "minimum": 0,
+            "type": "number"
+          },
+          "status": {
+            "enum": [
+              "PASS",
+              "FAIL",
+              "SKIPPED"
+            ]
+          }
+        },
+        "required": [
+          "id",
+          "name",
+          "status",
+          "seconds",
+          "detail"
+        ],
+        "type": "object"
+      },
+      "minItems": 1,
+      "type": "array"
+    },
+    "schema": {
+      "const": "DF/GATE_RESULTS/1"
+    },
+    "totals": {
+      "required": [
+        "run",
+        "passed",
+        "failed",
+        "skipped"
+      ],
+      "type": "object"
+    },
+    "verdict": {
+      "enum": [
+        "PASS",
+        "FAIL"
+      ]
+    }
+  },
+  "required": [
+    "schema",
+    "df_release",
+    "subject",
+    "executed_at_utc",
+    "host",
+    "gates",
+    "totals",
+    "verdict"
+  ],
+  "title": "DF gate results (measured)",
+  "type": "object"
+}

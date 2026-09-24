@@ -1,0 +1,8 @@
+#!/bin/sh
+# DF_Small/RUN -- a .pal bundle -> its row-sequence witness on this VM; a native guest program -> compile/sign/verify/run
+# Offline. Nothing here opens a socket (NETWORK=deny, BACKEND=none).
+set -eu
+ROOT="$(CDPATH= cd -- "$(dirname -- "$0")" && pwd)"
+cd "$ROOT"
+PY="${PYTHON:-python3}"
+exec "$PY" -B adapter/dfabric/cli.py node-run "$@"

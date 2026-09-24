@@ -1,0 +1,112 @@
+{
+  "$id": "https://df.local/schema/DF_PACKAGE_MANIFEST.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "properties": {
+    "assembled_at_utc": {
+      "type": "string"
+    },
+    "core_version": {
+      "type": "string"
+    },
+    "df_release": {
+      "type": "string"
+    },
+    "embedded_payload": {
+      "type": [
+        "object",
+        "null"
+      ]
+    },
+    "file_count": {
+      "minimum": 1,
+      "type": "integer"
+    },
+    "files": {
+      "items": {
+        "additionalProperties": false,
+        "properties": {
+          "bytes": {
+            "minimum": 0,
+            "type": "integer"
+          },
+          "path": {
+            "type": "string"
+          },
+          "sha256": {
+            "pattern": "^[0-9a-f]{64}$",
+            "type": "string"
+          }
+        },
+        "required": [
+          "path",
+          "bytes",
+          "sha256"
+        ],
+        "type": "object"
+      },
+      "minItems": 1,
+      "type": "array"
+    },
+    "gates_measured_here": {
+      "type": "object"
+    },
+    "inventory_exclusion_reason": {
+      "type": "string"
+    },
+    "inventory_exclusions": {
+      "items": {
+        "type": "string"
+      },
+      "type": "array"
+    },
+    "language": {
+      "const": "PA-LCTL"
+    },
+    "package_kind": {
+      "enum": [
+        "fabric_node",
+        "fabric"
+      ]
+    },
+    "package_name": {
+      "type": "string"
+    },
+    "physical_execution": {
+      "required": [
+        "NETWORK",
+        "BACKEND"
+      ],
+      "type": "object"
+    },
+    "schema": {
+      "const": "DF/PACKAGE_MANIFEST/1"
+    },
+    "source_corpora": {
+      "type": "object"
+    },
+    "total_bytes": {
+      "minimum": 1,
+      "type": "integer"
+    }
+  },
+  "required": [
+    "schema",
+    "df_release",
+    "package_name",
+    "package_kind",
+    "language",
+    "core_version",
+    "assembled_at_utc",
+    "file_count",
+    "total_bytes",
+    "files",
+    "inventory_exclusions",
+    "inventory_exclusion_reason",
+    "physical_execution",
+    "source_corpora",
+    "embedded_payload",
+    "gates_measured_here"
+  ],
+  "title": "DF package manifest",
+  "type": "object"
+}

@@ -1,0 +1,67 @@
+{
+  "$id": "https://df.local/schema/DF_CAPABILITY_LEDGER.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "properties": {
+    "integrity": {
+      "required": [
+        "operational_without_evidence"
+      ],
+      "type": "object"
+    },
+    "items": {
+      "items": {
+        "properties": {
+          "evidence": {
+            "items": {
+              "type": "string"
+            },
+            "type": [
+              "array",
+              "null"
+            ]
+          },
+          "status": {
+            "enum": [
+              "BLOCKED",
+              "SPECIFIED",
+              "SCAFFOLDED",
+              "IMPLEMENTED",
+              "VERIFIED",
+              "OPERATIONAL",
+              "QUALIFIED",
+              "IMPLEMENTED_PARTIAL",
+              "BLOCKED_EXTERNAL_AUTHORITY",
+              "BLOCKED_CAPABILITY_ABSENT",
+              "SKIPPED",
+              "NOT_CLAIMED"
+            ]
+          }
+        },
+        "required": [
+          "id",
+          "title",
+          "status",
+          "statement",
+          "evidence"
+        ],
+        "type": "object"
+      },
+      "minItems": 1,
+      "type": "array"
+    },
+    "schema": {
+      "const": "DF/CAPABILITY_LEDGER/1"
+    }
+  },
+  "required": [
+    "schema",
+    "df_release",
+    "subject",
+    "rule",
+    "items",
+    "distribution",
+    "integrity"
+  ],
+  "title": "DF capability ledger",
+  "type": "object"
+}

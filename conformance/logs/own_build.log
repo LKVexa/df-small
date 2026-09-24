@@ -1,0 +1,6 @@
+$ make
+[exit 0 in 2.95s]
+mkdir -p .build
+cc -Isrc -std=c11 -O2 -Wall -Wextra -Werror -fno-common -fstack-protector-strong src/brvm.c src/brasm.c host/brctl.c -o .build/brctl -lcrypto
+cc -Isrc -std=c11 -O2 -Wall -Wextra -Werror -fno-common -fstack-protector-strong src/brvm.c src/brasm.c tests/test_main.c -o .build/br_tests -lcrypto
+cc -Isrc -std=c11 -O2 -Wall -Wextra -Werror -fno-common -fstack-protector-strong host/br_sizes.c -o .build/br_sizes

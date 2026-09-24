@@ -1,0 +1,31 @@
+{
+  "$id": "https://df.local/schema/DF_NODES.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "properties": {
+    "nodes": {
+      "items": {
+        "required": [
+          "node_id",
+          "container",
+          "relative_path",
+          "sums_sha256",
+          "zip_sha256",
+          "payload_tree_sha256"
+        ],
+        "type": "object"
+      },
+      "minItems": 1,
+      "type": "array"
+    },
+    "schema": {
+      "const": "DF/NODES/1"
+    }
+  },
+  "required": [
+    "schema",
+    "df_release",
+    "nodes"
+  ],
+  "title": "DF fabric node registry (pinned digests)",
+  "type": "object"
+}

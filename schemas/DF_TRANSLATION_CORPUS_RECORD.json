@@ -1,0 +1,105 @@
+{
+  "$id": "https://df.local/schema/DF_TRANSLATION_CORPUS_RECORD.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "confidence_score": {
+      "maximum": 1.0,
+      "minimum": 0.0,
+      "type": "number"
+    },
+    "container": {
+      "type": "string"
+    },
+    "evidence": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "record_id": {
+      "type": "string"
+    },
+    "source": {
+      "properties": {
+        "artifact": {
+          "type": "string"
+        },
+        "claim": {
+          "type": "string"
+        },
+        "measured": {
+          "type": [
+            "string",
+            "number",
+            "boolean",
+            "null",
+            "object",
+            "array"
+          ]
+        }
+      },
+      "required": [
+        "artifact",
+        "claim"
+      ],
+      "type": "object"
+    },
+    "status": {
+      "enum": [
+        "BLOCKED",
+        "SPECIFIED",
+        "SCAFFOLDED",
+        "IMPLEMENTED",
+        "VERIFIED",
+        "OPERATIONAL",
+        "QUALIFIED",
+        "IMPLEMENTED_PARTIAL",
+        "BLOCKED_EXTERNAL_AUTHORITY",
+        "BLOCKED_CAPABILITY_ABSENT",
+        "SKIPPED",
+        "NOT_CLAIMED"
+      ]
+    },
+    "target": {
+      "properties": {
+        "construct": {
+          "type": "string"
+        },
+        "language": {
+          "const": "PA-LCTL"
+        },
+        "row": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "text": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "language",
+        "construct",
+        "text"
+      ],
+      "type": "object"
+    },
+    "translation_rule": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "record_id",
+    "container",
+    "source",
+    "target",
+    "translation_rule",
+    "status",
+    "evidence",
+    "confidence_score"
+  ],
+  "title": "DF translation corpus record (one JSON object per line)",
+  "type": "object"
+}

@@ -1,0 +1,32 @@
+{
+  "$id": "https://df.local/schema/DF_SOURCE_AUTHORITY.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "properties": {
+    "language_corpora": {
+      "required": [
+        "packages"
+      ],
+      "type": "object"
+    },
+    "schema": {
+      "const": "DF/SOURCE_AUTHORITY/1"
+    },
+    "translation_rules": {
+      "minItems": 1,
+      "type": "array"
+    },
+    "vm_containers": {
+      "minItems": 1,
+      "type": "array"
+    }
+  },
+  "required": [
+    "schema",
+    "df_release",
+    "language_corpora",
+    "vm_containers",
+    "translation_rules"
+  ],
+  "title": "DF source authority",
+  "type": "object"
+}

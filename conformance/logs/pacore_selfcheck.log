@@ -1,0 +1,88 @@
+{
+  "BACKEND": "none",
+  "NETWORK": "deny",
+  "command": "selfcheck",
+  "language": "PA-LCTL",
+  "outcome": "OK",
+  "result": {
+    "BACKEND": "none",
+    "NETWORK": "deny",
+    "checks": [
+      {
+        "check": "parse",
+        "detail": "",
+        "ok": true
+      },
+      {
+        "check": "verify",
+        "detail": "",
+        "ok": true
+      },
+      {
+        "check": "ses_hash_stable",
+        "detail": "",
+        "ok": true
+      },
+      {
+        "check": "work_span",
+        "detail": "",
+        "ok": true
+      },
+      {
+        "check": "simulation_deterministic",
+        "detail": "",
+        "ok": true
+      },
+      {
+        "check": "execution_label_honest",
+        "detail": "",
+        "ok": true
+      },
+      {
+        "check": "ledger_files",
+        "detail": "",
+        "ok": true
+      },
+      {
+        "check": "qcir_round_trip",
+        "detail": "",
+        "ok": true
+      },
+      {
+        "check": "provenance_fields",
+        "detail": "",
+        "ok": true
+      },
+      {
+        "check": "no_physical_claim",
+        "detail": "",
+        "ok": true
+      },
+      {
+        "check": "physical_outputs_blocked",
+        "detail": "",
+        "ok": true
+      },
+      {
+        "check": "redesignation",
+        "detail": "",
+        "ok": true
+      },
+      {
+        "check": "policy_constants",
+        "detail": "",
+        "ok": true
+      },
+      {
+        "check": "case_registries",
+        "detail": "712 positive / 660 negative",
+        "ok": true
+      }
+    ],
+    "language": "PA-LCTL",
+    "profile": "pa.lctl.quantum.parallel.distributed",
+    "verdict": "SELFCHECK_PASS",
+    "version": "1.6.0-rc1"
+  },
+  "version": "1.6.0-rc1"
+}

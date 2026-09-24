@@ -1,0 +1,47 @@
+$ make clean operational
+[exit 0 in 26.002s]
+rm -f .build/brctl .build/br_tests .build/br_tests_san .build/br_sizes \
+	.build/smoke.private .build/smoke.public .build/smoke-signed.brimg \
+	.build/smoke-state.* \
+	.build/repro-a.brimg .build/repro-b.brimg
+cc -Isrc -std=c11 -O2 -Wall -Wextra -Werror -fno-common -fstack-protector-strong src/brvm.c src/brasm.c tests/test_main.c -o .build/br_tests -lcrypto
+.build/br_tests
+{"suite":"BOTTLE_ROCKET_3.0.0_MODEL","failures":0,"result":"PASS"}
+cc -Isrc -std=c11 -O2 -Wall -Wextra -Werror -fno-common -fstack-protector-strong src/brvm.c src/brasm.c host/brctl.c -o .build/brctl -lcrypto
+.build/brctl assemble examples/boot.mssl deploy/BOTTLE_ROCKET_SIM_CORE_3.0.0_MODEL.brimg
+MSSL assembly: PASS
+test "$(wc -c < deploy/BOTTLE_ROCKET_SIM_CORE_3.0.0_MODEL.brimg)" -le 51200
+.build/brctl assemble examples/boot.mssl .build/repro-a.brimg
+MSSL assembly: PASS
+.build/brctl assemble examples/boot.mssl .build/repro-b.brimg
+MSSL assembly: PASS
+cmp .build/repro-a.brimg .build/repro-b.brimg
+rm -f .build/repro-a.brimg .build/repro-b.brimg
+.build/brctl keygen .build/smoke.private .build/smoke.public
+Ed25519 host-evaluation key generation: PASS
+.build/brctl sign-image deploy/BOTTLE_ROCKET_SIM_CORE_3.0.0_MODEL.brimg .build/smoke-signed.brimg .build/smoke.private
+BOTTLE ROCKET signed image: PASS
+.build/brctl verify-image .build/smoke-signed.brimg .build/smoke.public
+status=0 trap=0 ip=0 image_version=3 result=PASS
+.build/brctl run-signed .build/smoke-signed.brimg .build/smoke.public
+status=2 trap=0 ip=6 image_version=3 result=PASS
+R2.low64=42
+.build/brctl update .build/smoke-signed.brimg .build/smoke.public --state .build/smoke-state
+BOTTLE ROCKET authorized APDU update: PASS
+.build/brctl recover-state .build/smoke-state
+status=0 trap=0 image_version=3 generation=1 last_txid=1 slot=0
+.build/brctl status --state .build/smoke-state
+status=0 trap=0 image_version=3 generation=1 last_txid=1 slot=0
+printf '010c00000200000000000000\n' | .build/brctl serve --state .build/smoke-state | grep 9000
+900002000000100003000001000010001800000010000000
+rm -f .build/smoke.private .build/smoke.public .build/smoke-signed.brimg
+rm -f .build/smoke-state.*
+cc -Isrc -std=c11 -O2 -Wall -Wextra -Werror -fno-common -fstack-protector-strong host/br_sizes.c -o .build/br_sizes
+.build/brctl inspect-image deploy/BOTTLE_ROCKET_SIM_CORE_3.0.0_MODEL.brimg
+{"version":3,"flags":1,"code":6,"data":0,"caps":3,"signed":false,"bytes":176,"digest":"8900e287560b1d8ae5360227e93eb3aec4f7c682b89e1ff4461bc6f26ee6968d"}
+.build/brctl run deploy/BOTTLE_ROCKET_SIM_CORE_3.0.0_MODEL.brimg
+status=2 trap=0 ip=6 image_version=3 result=PASS
+R2.low64=42
+.build/br_sizes
+{"record":"BOTTLE_ROCKET.ReferenceResourceMeasurement","word_bytes":131072,"register_bytes":2097152,"scratch_bytes":262144,"vm_inline_bytes":12816,"allocated_wide_bytes":35913728,"reference_total_bytes":35926544}
+distribution_uncompressed_bytes=109905 ceiling=110000

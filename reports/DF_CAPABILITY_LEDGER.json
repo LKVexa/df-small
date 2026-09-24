@@ -1,0 +1,334 @@
+{
+  "df_release": "DF-PA21.2-1.0.0",
+  "distribution": {
+    "BLOCKED": 3,
+    "BLOCKED_CAPABILITY_ABSENT": 1,
+    "BLOCKED_EXTERNAL_AUTHORITY": 1,
+    "OPERATIONAL": 16,
+    "VERIFIED": 1
+  },
+  "integrity": {
+    "operational_without_evidence": [],
+    "operational_without_passing_gate": []
+  },
+  "items": [
+    {
+      "evidence": [
+        "conformance/DF_GATE_RESULTS.json#G0.1",
+        "conformance/DF_GATE_RESULTS.json#G0.2"
+      ],
+      "gate_results": {
+        "G0.1": "SKIPPED",
+        "G0.2": "SKIPPED"
+      },
+      "gates": [
+        "G0.1",
+        "G0.2"
+      ],
+      "id": "DFN-01",
+      "note": "G0.1/G0.2 run after sealing; the shipped results file predates the seal by construction (see provenance/DF_PROVENANCE.json assembly record) and VERIFY re-runs them live",
+      "statement": "every delivered byte is hashed (SHA256SUMS.txt) and the MANIFEST inventory matches disk",
+      "status": "VERIFIED",
+      "title": "container integrity"
+    },
+    {
+      "evidence": [
+        "conformance/DF_GATE_RESULTS.json#G0.3"
+      ],
+      "gate_results": {
+        "G0.3": "PASS"
+      },
+      "gates": [
+        "G0.3"
+      ],
+      "id": "DFN-02",
+      "statement": "the embedded VM package equals the source zip content, file by file",
+      "status": "OPERATIONAL",
+      "title": "payload byte-identical"
+    },
+    {
+      "evidence": [
+        "conformance/DF_GATE_RESULTS.json#G0.4"
+      ],
+      "gate_results": {
+        "G0.4": "PASS"
+      },
+      "gates": [
+        "G0.4"
+      ],
+      "id": "DFN-03",
+      "statement": "core/reference/pacore equals the pinned digest shared by all five containers",
+      "status": "OPERATIONAL",
+      "title": "one core, pinned"
+    },
+    {
+      "evidence": [
+        "conformance/DF_GATE_RESULTS.json#G2",
+        "conformance/DF_GATE_RESULTS.json#G3"
+      ],
+      "gate_results": {
+        "G2": "PASS",
+        "G3": "PASS"
+      },
+      "gates": [
+        "G2",
+        "G3"
+      ],
+      "id": "DFN-04",
+      "statement": "every JSON artifact validates against its shipped schema; every ledger citation resolves",
+      "status": "OPERATIONAL",
+      "title": "schemas and citations"
+    },
+    {
+      "evidence": [
+        "conformance/DF_GATE_RESULTS.json#G1"
+      ],
+      "gate_results": {
+        "G1": "PASS"
+      },
+      "gates": [
+        "G1"
+      ],
+      "id": "DFN-05",
+      "statement": "python3 -B -m reference.pacore.cli selfcheck -> SELFCHECK_PASS",
+      "status": "OPERATIONAL",
+      "title": "reference core selfcheck"
+    },
+    {
+      "evidence": [
+        "conformance/DF_GATE_RESULTS.json#N0"
+      ],
+      "gate_results": {
+        "N0": "PASS"
+      },
+      "gates": [
+        "N0"
+      ],
+      "id": "DFN-06",
+      "statement": "REQUIREMENTS.txt is checked first; missing tools become SKIPPED diagnostics",
+      "status": "OPERATIONAL",
+      "title": "toolchain preflight"
+    },
+    {
+      "evidence": [
+        "conformance/DF_GATE_RESULTS.json#N1"
+      ],
+      "gate_results": {
+        "N1": "PASS"
+      },
+      "gates": [
+        "N1"
+      ],
+      "id": "DFN-07",
+      "statement": "`make clean operational` reproduces from the delivered bytes with stock flags; the VM's own sums verify afterwards (SHA256SUMS.txt (19 entries))",
+      "status": "OPERATIONAL",
+      "title": "the VM's own build and acceptance gate"
+    },
+    {
+      "evidence": [
+        "conformance/DF_GATE_RESULTS.json#A1"
+      ],
+      "gate_results": {
+        "A1": "PASS"
+      },
+      "gates": [
+        "A1"
+      ],
+      "id": "DFN-08",
+      "statement": "PA-LCTL/TARGET_ADAPTER/1 identity: LOCAL_TRUSTED, CLASSICAL_ label, empty gate set, no physical flag, toolchain digests, target self-report restated",
+      "status": "OPERATIONAL",
+      "title": "adapter attestation"
+    },
+    {
+      "evidence": [
+        "conformance/DF_GATE_RESULTS.json#A2"
+      ],
+      "gate_results": {
+        "A2": "PASS"
+      },
+      "gates": [
+        "A2"
+      ],
+      "id": "DFN-09",
+      "statement": "three physical claims are refused at adapter construction",
+      "status": "OPERATIONAL",
+      "title": "physical firewall"
+    },
+    {
+      "evidence": [
+        "conformance/DF_GATE_RESULTS.json#A3"
+      ],
+      "gate_results": {
+        "A3": "PASS"
+      },
+      "gates": [
+        "A3"
+      ],
+      "id": "DFN-10",
+      "statement": "the sealed row sequence of every shipped bundle executes natively and equals the CPython reference",
+      "status": "OPERATIONAL",
+      "title": "row-sequence witness, native + differential"
+    },
+    {
+      "evidence": [
+        "conformance/DF_GATE_RESULTS.json#A4"
+      ],
+      "gate_results": {
+        "A4": "PASS"
+      },
+      "gates": [
+        "A4"
+      ],
+      "id": "DFN-11",
+      "statement": "cell change / reorder / delete / insert each change the native witness",
+      "status": "OPERATIONAL",
+      "title": "witness sensitivity"
+    },
+    {
+      "evidence": [
+        "conformance/DF_GATE_RESULTS.json#A5"
+      ],
+      "gate_results": {
+        "A5": "PASS"
+      },
+      "gates": [
+        "A5"
+      ],
+      "id": "DFN-12",
+      "statement": "max_rows+1 is refused with SUPPORTED_WITH_LIMITS stated; max_rows executes",
+      "status": "OPERATIONAL",
+      "title": "bounds are refusals"
+    },
+    {
+      "evidence": [
+        "conformance/DF_GATE_RESULTS.json#A6"
+      ],
+      "gate_results": {
+        "A6": "PASS"
+      },
+      "gates": [
+        "A6"
+      ],
+      "id": "DFN-13",
+      "statement": "an unbounded loop traps instead of running",
+      "status": "OPERATIONAL",
+      "title": "declared step budget"
+    },
+    {
+      "evidence": [
+        "conformance/DF_GATE_RESULTS.json#A7"
+      ],
+      "gate_results": {
+        "A7": "PASS"
+      },
+      "gates": [
+        "A7"
+      ],
+      "id": "DFN-14",
+      "statement": "same rows -> same source, same image, same witness, twice",
+      "status": "OPERATIONAL",
+      "title": "deterministic replay"
+    },
+    {
+      "evidence": [
+        "conformance/DF_GATE_RESULTS.json#A8"
+      ],
+      "gate_results": {
+        "A8": "PASS"
+      },
+      "gates": [
+        "A8"
+      ],
+      "id": "DFN-15",
+      "statement": "shots>1, wrong QCIR-P2 schema, empty rows are refused",
+      "status": "OPERATIONAL",
+      "title": "fail-closed refusals"
+    },
+    {
+      "evidence": [
+        "conformance/DF_GATE_RESULTS.json#A9"
+      ],
+      "gate_results": {
+        "A9": "PASS"
+      },
+      "gates": [
+        "A9"
+      ],
+      "id": "DFN-16",
+      "statement": "examples/add42.mssl compiles, signs, verifies, runs and returns 42",
+      "status": "OPERATIONAL",
+      "title": "native guest program"
+    },
+    {
+      "evidence": [
+        "spec/DF_NODE_SPEC.md#6"
+      ],
+      "gate_results": {},
+      "gates": [],
+      "id": "DFN-20",
+      "note": "evidenced in DF_Fabric (gate F6, conformance/DF_GATE_RESULTS.json of DF_Fabric)",
+      "statement": "a bundle longer than the bound is executed as a chain of segments in the fabric",
+      "status": "OPERATIONAL",
+      "title": "segmented witness across nodes"
+    },
+    {
+      "evidence": [
+        "spec/DF_NODE_SPEC.md#10"
+      ],
+      "gate_results": {},
+      "gates": [],
+      "id": "DFN-30",
+      "statement": "executing the classical rows of a bundle rather than witnessing them",
+      "status": "BLOCKED_CAPABILITY_ABSENT",
+      "title": "classical-face execution"
+    },
+    {
+      "evidence": [
+        "node/NODE_DESCRIPTOR.json"
+      ],
+      "gate_results": {},
+      "gates": [],
+      "id": "DFN-31",
+      "statement": "the machine has no qubit; every quantum feature is UNSUPPORTED",
+      "status": "BLOCKED",
+      "title": "quantum-face execution"
+    },
+    {
+      "evidence": [
+        "core/spec/PA_LCTL_FABRIC_SPEC.md"
+      ],
+      "gate_results": {},
+      "gates": [],
+      "id": "DFN-32",
+      "statement": "NETWORK=deny; the fabric is executed on one host",
+      "status": "BLOCKED",
+      "title": "cross-machine federation"
+    },
+    {
+      "evidence": [
+        "core/spec/PA_LCTL_TARGET_ADAPTER_SPEC.md"
+      ],
+      "gate_results": {},
+      "gates": [],
+      "id": "DFN-33",
+      "statement": "PHYSICAL_PARALLEL_QPU_EXECUTION, PHYSICAL_DISTRIBUTED_QPU_EXECUTION",
+      "status": "BLOCKED_EXTERNAL_AUTHORITY",
+      "title": "physical quantum outputs"
+    },
+    {
+      "evidence": [
+        "reports/DF_BLOCKED_REGISTER.md"
+      ],
+      "gate_results": {},
+      "gates": [],
+      "id": "DFN-34",
+      "note": "restated verbatim from MANIFEST.json / spec/PROFILE.md of the package (`MODEL_OPERATIONAL`; physical SIM/UICC `EXTERNAL_NOT_QUALIFIED`); not lifted by the fabric",
+      "statement": "card target/AID; production trust authority; NVM/watchdog; hardware/security qualification; deployment authorization",
+      "status": "BLOCKED",
+      "title": "the target's own blockers"
+    }
+  ],
+  "rule": "No item is operational because its source file exists. Operational status requires native executable evidence satisfying that item's promotion gate.",
+  "schema": "DF/CAPABILITY_LEDGER/1",
+  "subject": "DF_Small (N_SMALL)"
+}

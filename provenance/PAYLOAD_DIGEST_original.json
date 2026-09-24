@@ -1,0 +1,116 @@
+{
+  "archive_layout": "one top-level directory BOTTLE_ROCKET_3.0.0_MODEL_OPERATIONAL_110K/",
+  "df_release": "DF-PA21.2-1.0.0",
+  "embedded_at": "vm/BOTTLE_ROCKET_3.0.0_MODEL_OPERATIONAL_110K/",
+  "file_count": 20,
+  "files": [
+    {
+      "bytes": 742,
+      "path": "MANIFEST.json",
+      "sha256": "be7341d1656cc51b61511dc14b61dea6722338da61674f1483d7dac49c98bd3c"
+    },
+    {
+      "bytes": 2953,
+      "path": "Makefile",
+      "sha256": "5111c9d32f3aed166287b0455df4e4375fdbbe3fa60786d5c3397fc08d72c498"
+    },
+    {
+      "bytes": 2530,
+      "path": "README.md",
+      "sha256": "8315690251ec2de5464ffabe6f881b2c301d40e1366c69dffa11b954d769aba8"
+    },
+    {
+      "bytes": 1593,
+      "path": "SHA256SUMS.txt",
+      "sha256": "7341f3329367681499de94c05d3e211239e04fdb4d5d9b6ca0dab684a8d904e0"
+    },
+    {
+      "bytes": 176,
+      "path": "deploy/BOTTLE_ROCKET_SIM_CORE_3.0.0_MODEL.brimg",
+      "sha256": "5b5cfcebc2448c27590d61d15ec1d20b5192064e92c34fd6f3053c306d162f54"
+    },
+    {
+      "bytes": 542,
+      "path": "evidence/AUDIT_DIGEST.json",
+      "sha256": "6cc9b7373a364bf7c14ab2d8e43af3274c1d474ff96ca933a7ac045657f9ac99"
+    },
+    {
+      "bytes": 612,
+      "path": "evidence/OPERATIONAL.json",
+      "sha256": "3d18a8886c1a08a243691d72f4447eb0df92ceb3a80ad975037d3758fe95196e"
+    },
+    {
+      "bytes": 252,
+      "path": "evidence/SIZE.json",
+      "sha256": "e2a287d771fbc63896d05ded8b678616b725682f64da81a3a0db15e2a30fb04d"
+    },
+    {
+      "bytes": 188,
+      "path": "evidence/q17/SIDECAR.json",
+      "sha256": "ff88c39ca4bdc68c6bdf7d4206fc22f782575b90881505fde5aa4171c2bb6c74"
+    },
+    {
+      "bytes": 189,
+      "path": "examples/boot.mssl",
+      "sha256": "0589cb1f9a87c09afbdfa1f1221f742dc744e4cb5dbc138a434450293a28c2ef"
+    },
+    {
+      "bytes": 622,
+      "path": "host/br_sizes.c",
+      "sha256": "0670046b86577784c86337eec18a93659343724566053c9b31814a8c782d06bc"
+    },
+    {
+      "bytes": 11709,
+      "path": "host/brctl.c",
+      "sha256": "0862ea82f98c3914b8c485d962035ee18daba532347869bca6f83557b8ddc2ed"
+    },
+    {
+      "bytes": 1158,
+      "path": "spec/BR_SPEC.json",
+      "sha256": "bed075f2b65efbde7e4c9cfa4a32f8e7ba9bcf321259701f8fed259c64ba9cab"
+    },
+    {
+      "bytes": 815,
+      "path": "spec/PROFILE.md",
+      "sha256": "271c60e4a5590c4f2c51dbcd912858e2d8be40204b0f5a8ab7bc95e17be25416"
+    },
+    {
+      "bytes": 658,
+      "path": "src/CORE.mssl",
+      "sha256": "6c2886e06fff8d7e0aaa923473b5a977ce3896f3f4eccfac30539c65b6c33911"
+    },
+    {
+      "bytes": 9509,
+      "path": "src/brasm.c",
+      "sha256": "5256b3b7015d5b3fec22bf862e05111a69b6845aad156f5adc9508dd315967fc"
+    },
+    {
+      "bytes": 232,
+      "path": "src/brasm.h",
+      "sha256": "47764b106f50efb404cc42eafe1f49bac3bcf782e8fe73f76bd7d51539ab5912"
+    },
+    {
+      "bytes": 69670,
+      "path": "src/brvm.c",
+      "sha256": "96cb5f1fdd770086d2449db630d28c353b114224b6c5995c9841223e4851ee01"
+    },
+    {
+      "bytes": 5482,
+      "path": "src/brvm.h",
+      "sha256": "71edc58d50fd1740555721d5a7cc57f12bb9caa254330118a76eba749cf9fd0d"
+    },
+    {
+      "bytes": 273,
+      "path": "tests/test_main.c",
+      "sha256": "22ca7aa2340282df211f66bf36ffbae541c6e2a239ead2f40ac9d65453e8f363"
+    }
+  ],
+  "node_id": "N_SMALL",
+  "note": "every file of the source archive, byte-identical; the DF container never edits it. Executable bits are restored on *.sh/*.py so the VM's own gates can run; bits are not part of the digest.",
+  "schema": "DF/PAYLOAD_DIGEST/1",
+  "source_zip": "Desktop/VMs/Small.zip",
+  "total_bytes": 109905,
+  "tree_sha256": "1cf22c38121bcd3b6d56944426ca137129a0f7bfeac5803d38a1bd2b087adc3a",
+  "zip_bytes": 37061,
+  "zip_sha256": "3fd95ec274d475d759d60832b413fbff9e3a8db5003da7e34a3c37d5b3b79fab"
+}

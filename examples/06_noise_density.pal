@@ -1,0 +1,19 @@
+#PA-LCTL/1.6
+#PROFILE pa.lctl.quantum.parallel.distributed
+#NETWORK deny
+#BACKEND none
+#COLUMNS ROW¦FACE¦LANE¦QSPACE¦OP¦OUT¦CTRL¦A¦B¦PARAM¦TYPE¦BASIS¦REGIME¦ASSUME¦ERROR¦RESOURCE¦CONF¦PROOF¦DOMAIN¦NODE¦LINK¦FAMILY
+R000¦FEDERATION¦-¦-¦DECLARE_DOMAIN¦D0¦-¦-¦-¦-¦execution_domain¦-¦EXACT¦-¦-¦-¦1.0¦-¦-¦-¦-¦-
+R001¦TOPOLOGY¦-¦-¦DECLARE_NODE¦N0¦-¦-¦-¦-¦node¦-¦EXACT¦-¦-¦device=cpu¦1.0¦-¦D0¦-¦-¦-
+R002¦TOPOLOGY¦-¦-¦DECLARE_NODE¦N1¦-¦-¦-¦-¦node¦-¦EXACT¦-¦-¦device=cpu¦1.0¦-¦D0¦-¦-¦-
+R080¦TOPOLOGY¦-¦-¦DECLARE_LINK¦Q0¦-¦N0¦N1¦-¦quantum_link¦-¦EXACT¦-¦-¦fidelity=0.98¦1.0¦-¦D0¦-¦-¦-
+R081¦TOPOLOGY¦-¦-¦DECLARE_LINK¦C0¦-¦N0¦N1¦-¦classical_channel¦-¦EXACT¦-¦-¦-¦1.0¦-¦D0¦-¦-¦-
+R082¦TOPOLOGY¦-¦-¦DECLARE_TOPOLOGY¦T0¦-¦-¦-¦-¦topology¦-¦EXACT¦-¦-¦nodes=4;domains=2;qcapacity=4¦1.0¦-¦-¦-¦-¦-
+R100¦PREPARE¦L0¦q[0:2]¦PREP0¦q[0]¦-¦-¦-¦-¦qubit¦Z¦EXACT¦normalization¦-¦-¦1.0¦-¦D0¦N0¦-¦-
+R101¦PREPARE¦L0¦q[0:2]¦PREP0¦q[1]¦-¦-¦-¦-¦qubit¦Z¦EXACT¦normalization¦-¦-¦1.0¦-¦D0¦N0¦-¦-
+R120¦EXEC¦L0¦-¦H¦-¦-¦q[0]¦-¦-¦unitary¦Z¦EXACT¦unitarity¦-¦-¦1.0¦-¦D0¦N0¦-¦-
+R121¦EXEC¦L0¦-¦CX¦-¦q[0]¦q[1]¦-¦-¦unitary¦Z¦EXACT¦unitarity¦-¦-¦1.0¦-¦D0¦N0¦-¦-
+R130¦NOISE¦L0¦-¦DEPOLARIZE¦-¦-¦q[0]¦-¦p=0.01¦channel¦Z¦APPROXIMATE¦cptp;markovian¦model=depolarizing;p=0.01¦-¦1.0¦-¦D0¦N0¦-¦-
+R131¦NOISE¦L0¦-¦AMPLITUDE_DAMP¦-¦-¦q[1]¦-¦gamma=0.02¦channel¦Z¦APPROXIMATE¦cptp;markovian¦model=amplitude_damping;gamma=0.02¦-¦1.0¦-¦D0¦N0¦-¦-
+R140¦MEASURE¦L0¦-¦MEASURE¦c0¦-¦q[0]¦-¦-¦measurement_result¦Z¦EXACT¦born_rule¦-¦-¦1.0¦-¦D0¦N0¦-¦-
+R141¦MEASURE¦L0¦-¦MEASURE¦c1¦-¦q[1]¦-¦-¦measurement_result¦Z¦EXACT¦born_rule¦-¦-¦1.0¦-¦D0¦N0¦-¦-

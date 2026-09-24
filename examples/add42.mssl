@@ -1,0 +1,7 @@
+.profile SIM_CORE
+.image_version 3
+.request_caps CONTROL|ARITH
+MOVI.WRAP R0, 40, C0
+MOVI.WRAP R1, 2, C0
+ADD.CHECKED R2, R0, R1, C0
+HALT.WRAP C0

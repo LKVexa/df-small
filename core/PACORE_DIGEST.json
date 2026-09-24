@@ -1,0 +1,10 @@
+{
+  "core_version": "1.6.0-rc1",
+  "df_release": "DF-PA21.2-1.0.0",
+  "file_count": 21,
+  "language": "PA-LCTL",
+  "pacore_tree_sha256": "f9d0991b6175e3bd7b33c4915f69078c36cd67c22bd7dad8d97370334251388c",
+  "pinned_from": "PA_Language_PA21.2/reference/pacore (byte-identical in all 22 PA21.2 packages)",
+  "rule": "the same digest SHALL appear in every DF container; DF_Fabric gate G0.4 and each node's G0.4 check it",
+  "schema": "DF/PACORE_DIGEST/1"
+}

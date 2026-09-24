@@ -1,0 +1,548 @@
+{
+  "assembly_host": {
+    "platform": "Linux-6.18.5-fc-v20-x86_64-with-glibc2.39",
+    "python": "3.11.15"
+  },
+  "df_release": "DF-PA21.2-1.0.0",
+  "generated_utc": "2026-08-17T01:30:05.379748Z",
+  "language_corpora": {
+    "core_version": "1.6.0-rc1 (PA-LCTL 1.6.1 behaviour per RELEASE_NOTES_PA21_3)",
+    "governing_documents": [
+      {
+        "governs": "federation object model, execution profiles, task runtime, BSP, collectives, event log and replay -- the fabric this release instantiates",
+        "path": "PA_Language_PA21.2/spec/PA_LCTL_FABRIC_SPEC.md",
+        "sha256": "23e195affdf8f23987b3889a7afaf49f3936e5d667cb0b77c62890c419fa1100"
+      },
+      {
+        "governs": "the adapter ABI (s2), the five-value feature-class vocabulary (s3), the physical-evidence firewall (s4)",
+        "path": "PA_Language_PA21.2/spec/PA_LCTL_TARGET_ADAPTER_SPEC.md",
+        "sha256": "fd462b3d3f275354ca8dea77fd68bb2ae35b2ab4b5171ad63487bf5be1c6bc50"
+      },
+      {
+        "governs": "the first classical adapter and the row-sequence witness (PA-LCTL/BR-LOWERING/1) that DF generalises",
+        "path": "PA_Language_PA21.2/spec/PA_LCTL_BOTTLE_ROCKET_BACKEND.md",
+        "sha256": "6ded0f111a5f627abdf7196a810470d8c6998f6e34b4822df82849ee0a8e0dc0"
+      },
+      {
+        "governs": "what a .pal bundle is; every DF bundle parses under it",
+        "path": "PA_Language_PA21.2/spec/PA_LCTL_GRAMMAR.ebnf",
+        "sha256": "61cbb97eb8f3a4d41d4e5a665c0bf85cee124ff1d0b82af443413dfeb058c6a9"
+      },
+      {
+        "governs": "the 22 columns, including DOMAIN / NODE / LINK / FAMILY used by the DF bundles",
+        "path": "PA_Language_PA21.2/spec/PA_LCTL_TUPLE_SCHEMA.md",
+        "sha256": "f461f424f435eb565317293dd19b245db9cdf5b9bb4dc438b92082a45d4960ee"
+      },
+      {
+        "governs": "the parallel / distributed / quantum-boundary ladders and their ceilings",
+        "path": "PA_Language_PA21.2/spec/PA_LCTL_EXECUTION_PROVENANCE.md",
+        "sha256": "a787966b468285116800e80b1f579719b08f3a532941b9744cd769d49c415e2a"
+      },
+      {
+        "governs": "the status vocabulary and the OPERATIONAL definition",
+        "path": "PA_Language_PA21.2/spec/PA_LCTL_CONFORMANCE_SPEC.md",
+        "sha256": "dc760a3bc2daeffcb3cd6f61bbb0bb3937dd26f035072ac13c14b8486283ce59"
+      },
+      {
+        "governs": "the honesty rules (exact / approximate / emulated / physical)",
+        "path": "PA_Language_PA21.2/spec/PA_LCTL_NORMATIVE_SPEC.md",
+        "sha256": "38b2530eaca0b8d1e244ed3fa78a7acd7fc74ade6d9a744b2dba65f726d0a2a6"
+      },
+      {
+        "governs": "the fabric implementation the DF fabric runs on, unchanged",
+        "path": "PA_Language_PA21.2/reference/pacore/fabric.py",
+        "sha256": "9db76eb51cb6411bc7575f44fc5a8457ef555ac2ef0332976ec6f63b49dee482"
+      },
+      {
+        "governs": "the adapter shape every DF node adapter follows",
+        "path": "PA_Language_PA21.2/reference/pacore/adapters/bottlerocket.py",
+        "sha256": "8afbf912f3e0ff4a796473cff31d248fb97a228e30b0990f7789d9ae27f71629"
+      },
+      {
+        "governs": "the witness lowering DF's N_MEDIUM lowering reproduces byte for byte",
+        "path": "PA_Language_PA21.2/reference/pacore/adapters/brlower.py",
+        "sha256": "9c77c9a486af4d96bbec802b3fc9be47cb415ac40d5fb92806f2db3129c1424f"
+      },
+      {
+        "governs": "parse / verify / seal for every DF bundle",
+        "path": "PA_Language_PA21.2/reference/pacore/lang.py",
+        "sha256": "20ed3badc0ca0879461a065d91abdc99575756656e97021d4ea36c78f89a1d16"
+      },
+      {
+        "governs": "the package conventions DF containers follow",
+        "path": "PA_Language_PA21.2/README_START_HERE.md, MANIFEST.json, SHA256SUMS.txt, RUN_PA21.sh, VERIFY_PA21.sh",
+        "sha256": "c82195a120c5189da15af2b24af817fdfab55094d8b3e04f29e9ca16bb1f9f8c"
+      }
+    ],
+    "packages": [
+      {
+        "evidence_index_sha256": "97d96fa2f328a963b96b3525323d0a1d1bea3148f58a0cb9a030e50b8f9c8ed7",
+        "files": 2584,
+        "package": "PA21.2_EVIDENCE"
+      },
+      {
+        "core_version": "1.6.0-rc1",
+        "files": 216,
+        "manifest_release": "PA21.2",
+        "manifest_source_package": "PA_Agent_Language_LCTL_1.6.0_RC1_HYPERFEDERATED_EXECUTION_FABRIC",
+        "package": "PA_Agent_Language_PA21.2",
+        "sha256sums_entries": 215,
+        "sha256sums_sha256": "700b0a0201e2da413f2cbb75dfac2ec9699a565e0548a1ee52ae2c24dab63015",
+        "updates_applied": [
+          "PA21.6",
+          "PA21.7",
+          "PA21.8-PA21.18 COPIED_BYTE_IDENTICAL",
+          "PA21.19-PA21.31 COPIED_BYTE_IDENTICAL"
+        ]
+      },
+      {
+        "core_version": "1.6.0-rc1",
+        "files": 216,
+        "manifest_release": "PA21.2",
+        "manifest_source_package": "PA_Certifier_Grammar_LCTL_1.6.0_RC1_HYPERFEDERATED_EXECUTION_FABRIC",
+        "package": "PA_Certifier_Grammar_PA21.2",
+        "sha256sums_entries": 215,
+        "sha256sums_sha256": "8646bad9b1221fefcd3840e14f28a362ce3ccdecd304c3851d4afc9cfbced125",
+        "updates_applied": [
+          "PA21.6",
+          "PA21.7",
+          "PA21.8-PA21.18 COPIED_BYTE_IDENTICAL",
+          "PA21.19-PA21.31 COPIED_BYTE_IDENTICAL"
+        ]
+      },
+      {
+        "core_version": "1.6.0-rc1",
+        "files": 216,
+        "manifest_release": "PA21.2",
+        "manifest_source_package": "PA_Core_Application_Language_LCTL_1.6.0_RC1_HYPERFEDERATED_EXECUTION_FABRIC",
+        "package": "PA_Core_Application_Language_PA21.2",
+        "sha256sums_entries": 215,
+        "sha256sums_sha256": "d97ff1040fad3bff14512acdddee6e7e2e81317aa8e5954705ee175e0ea70e35",
+        "updates_applied": [
+          "PA21.6",
+          "PA21.7",
+          "PA21.8-PA21.18 COPIED_BYTE_IDENTICAL",
+          "PA21.19-PA21.31 COPIED_BYTE_IDENTICAL"
+        ]
+      },
+      {
+        "core_version": "1.6.0-rc1",
+        "files": 216,
+        "manifest_release": "PA21.2",
+        "manifest_source_package": "PA_Data_Language_LCTL_1.6.0_RC1_HYPERFEDERATED_EXECUTION_FABRIC",
+        "package": "PA_Data_Language_PA21.2",
+        "sha256sums_entries": 215,
+        "sha256sums_sha256": "cfb60a1a601ecf7fdca4383150ed011f60d2f195bc5e0c9b6175dbb952777c3e",
+        "updates_applied": [
+          "PA21.6",
+          "PA21.7",
+          "PA21.8-PA21.18 COPIED_BYTE_IDENTICAL",
+          "PA21.19-PA21.31 COPIED_BYTE_IDENTICAL"
+        ]
+      },
+      {
+        "core_version": "1.6.0-rc1",
+        "files": 216,
+        "manifest_release": "PA21.2",
+        "manifest_source_package": "PA_DeepML_Animation_VFX_Language_LCTL_1.6.0_RC1_HYPERFEDERATED_EXECUTION_FABRIC",
+        "package": "PA_DeepML_Animation_VFX_Language_PA21.2",
+        "sha256sums_entries": 215,
+        "sha256sums_sha256": "8781e94ca459a0513c13c72791bffc89fe392603787e13a38ec14f2c9cff0ca9",
+        "updates_applied": [
+          "PA21.6",
+          "PA21.7",
+          "PA21.8-PA21.18 COPIED_BYTE_IDENTICAL",
+          "PA21.19-PA21.31 COPIED_BYTE_IDENTICAL"
+        ]
+      },
+      {
+        "core_version": "1.6.0-rc1",
+        "files": 216,
+        "manifest_release": "PA21.2",
+        "manifest_source_package": "PA_DeepML_Kernel_Language_LCTL_1.6.0_RC1_HYPERFEDERATED_EXECUTION_FABRIC",
+        "package": "PA_DeepML_Kernel_Language_PA21.2",
+        "sha256sums_entries": 215,
+        "sha256sums_sha256": "8dd1aae40a0bab29d247cc552a80231072dc323fcfffa3ea4905b7a5143a7f3b",
+        "updates_applied": [
+          "PA21.6",
+          "PA21.7",
+          "PA21.8-PA21.18 COPIED_BYTE_IDENTICAL",
+          "PA21.19-PA21.31 COPIED_BYTE_IDENTICAL"
+        ]
+      },
+      {
+        "core_version": "1.6.0-rc1",
+        "files": 216,
+        "manifest_release": "PA21.2",
+        "manifest_source_package": "PA_DeepML_Language_LCTL_1.6.0_RC1_HYPERFEDERATED_EXECUTION_FABRIC",
+        "package": "PA_DeepML_Language_PA21.2",
+        "sha256sums_entries": 215,
+        "sha256sums_sha256": "514994f11d2f8b5de1f98c50ab99e3bdb840b27213917eb76dba6d6cbf46dc7f",
+        "updates_applied": [
+          "PA21.6",
+          "PA21.7",
+          "PA21.8-PA21.18 COPIED_BYTE_IDENTICAL",
+          "PA21.19-PA21.31 COPIED_BYTE_IDENTICAL"
+        ]
+      },
+      {
+        "core_version": "1.6.0-rc1",
+        "files": 216,
+        "manifest_release": "PA21.2",
+        "manifest_source_package": "PA_DeepML_Logic_Functional_Language_LCTL_1.6.0_RC1_HYPERFEDERATED_EXECUTION_FABRIC",
+        "package": "PA_DeepML_Logic_Functional_Language_PA21.2",
+        "sha256sums_entries": 215,
+        "sha256sums_sha256": "0714435d5581892cdd804caed44c0f34b372d7f5cdd0f3534fe447b88cd800e1",
+        "updates_applied": [
+          "PA21.6",
+          "PA21.7",
+          "PA21.8-PA21.18 COPIED_BYTE_IDENTICAL",
+          "PA21.19-PA21.31 COPIED_BYTE_IDENTICAL"
+        ]
+      },
+      {
+        "core_version": "1.6.0-rc1",
+        "files": 216,
+        "manifest_release": "PA21.2",
+        "manifest_source_package": "PA_DeepML_Motion_Animation_Language_LCTL_1.6.0_RC1_HYPERFEDERATED_EXECUTION_FABRIC",
+        "package": "PA_DeepML_Motion_Animation_Language_PA21.2",
+        "sha256sums_entries": 215,
+        "sha256sums_sha256": "254136eb8da3bb499781da0bdeedc6bcd33145d91e4ade3b5f33291263d7881f",
+        "updates_applied": [
+          "PA21.6",
+          "PA21.7",
+          "PA21.8-PA21.18 COPIED_BYTE_IDENTICAL",
+          "PA21.19-PA21.31 COPIED_BYTE_IDENTICAL"
+        ]
+      },
+      {
+        "core_version": "1.6.0-rc1",
+        "files": 216,
+        "manifest_release": "PA21.2",
+        "manifest_source_package": "PA_DeepML_Specialized_Language_LCTL_1.6.0_RC1_HYPERFEDERATED_EXECUTION_FABRIC",
+        "package": "PA_DeepML_Specialized_Language_PA21.2",
+        "sha256sums_entries": 215,
+        "sha256sums_sha256": "530f49f461904d64797c80b16f3647e95d46e623a60678bb2dcbcea5fe944a49",
+        "updates_applied": [
+          "PA21.6",
+          "PA21.7",
+          "PA21.8-PA21.18 COPIED_BYTE_IDENTICAL",
+          "PA21.19-PA21.31 COPIED_BYTE_IDENTICAL"
+        ]
+      },
+      {
+        "core_version": "1.6.0-rc1",
+        "files": 216,
+        "manifest_release": "PA21.2",
+        "manifest_source_package": "PA_Interface_Language_LCTL_1.6.0_RC1_HYPERFEDERATED_EXECUTION_FABRIC",
+        "package": "PA_Interface_Language_PA21.2",
+        "sha256sums_entries": 215,
+        "sha256sums_sha256": "95111b5907f686aa4d13ad072f46a3166cb3915c0fc031cf284409154ecc7642",
+        "updates_applied": [
+          "PA21.6",
+          "PA21.7",
+          "PA21.8-PA21.18 COPIED_BYTE_IDENTICAL",
+          "PA21.19-PA21.31 COPIED_BYTE_IDENTICAL"
+        ]
+      },
+      {
+        "core_version": "1.6.0-rc1",
+        "files": 222,
+        "manifest_release": "PA21.2",
+        "manifest_source_package": "PA_Language_LCTL_1.6.0_RC1_HYPERFEDERATED_EXECUTION_FABRIC",
+        "package": "PA_Language_PA21.2",
+        "sha256sums_entries": 215,
+        "sha256sums_sha256": "53eb291d362d4d8e197fc5e1adff95cd3ca3c446b5e33c2dc9b5477ce19b7aba",
+        "updates_applied": [
+          "PA21.6",
+          "PA21.7",
+          "PA21.8-PA21.18 COPIED_BYTE_IDENTICAL",
+          "PA21.19-PA21.31 COPIED_BYTE_IDENTICAL"
+        ]
+      },
+      {
+        "core_version": "1.6.0-rc1",
+        "files": 216,
+        "manifest_release": "PA21.2",
+        "manifest_source_package": "PA_MCRT_Portal_Timeline_Language_LCTL_1.6.0_RC1_HYPERFEDERATED_EXECUTION_FABRIC",
+        "package": "PA_MCRT_Portal_Timeline_Language_PA21.2",
+        "sha256sums_entries": 215,
+        "sha256sums_sha256": "ac8fed73e49fa07f5be1c51c9d16694494295d69708177a989063875f9c5f0c2",
+        "updates_applied": [
+          "PA21.6",
+          "PA21.7",
+          "PA21.8-PA21.18 COPIED_BYTE_IDENTICAL",
+          "PA21.19-PA21.31 COPIED_BYTE_IDENTICAL"
+        ]
+      },
+      {
+        "core_version": "1.6.0-rc1",
+        "files": 216,
+        "manifest_release": "PA21.2",
+        "manifest_source_package": "PA_Operations_Language_LCTL_1.6.0_RC1_HYPERFEDERATED_EXECUTION_FABRIC",
+        "package": "PA_Operations_Language_PA21.2",
+        "sha256sums_entries": 215,
+        "sha256sums_sha256": "cb78ddfbc713239d01e23bb06c4b010f0761a5d0aa4c7aac527f853ed7cdf24a",
+        "updates_applied": [
+          "PA21.6",
+          "PA21.7",
+          "PA21.8-PA21.18 COPIED_BYTE_IDENTICAL",
+          "PA21.19-PA21.31 COPIED_BYTE_IDENTICAL"
+        ]
+      },
+      {
+        "core_version": "1.6.0-rc1",
+        "files": 216,
+        "manifest_release": "PA21.2",
+        "manifest_source_package": "PA_PAXD_UI_UX_Design_Language_LCTL_1.6.0_RC1_HYPERFEDERATED_EXECUTION_FABRIC",
+        "package": "PA_PAXD_UI_UX_Design_Language_PA21.2",
+        "sha256sums_entries": 215,
+        "sha256sums_sha256": "de581a6bbb052fc14aa61300d22af609770aa3b941f088abfdfb2958ade656fd",
+        "updates_applied": [
+          "PA21.6",
+          "PA21.7",
+          "PA21.8-PA21.18 COPIED_BYTE_IDENTICAL",
+          "PA21.19-PA21.31 COPIED_BYTE_IDENTICAL"
+        ]
+      },
+      {
+        "core_version": "1.6.0-rc1",
+        "files": 216,
+        "manifest_release": "PA21.2",
+        "manifest_source_package": "PA_Portal_Scene_Language_LCTL_1.6.0_RC1_HYPERFEDERATED_EXECUTION_FABRIC",
+        "package": "PA_Portal_Scene_Language_PA21.2",
+        "sha256sums_entries": 215,
+        "sha256sums_sha256": "1d39bae325ddfdef6966ea24d34462e1e0a045bc58c867f139e9d2b08a4edf19",
+        "updates_applied": [
+          "PA21.6",
+          "PA21.7",
+          "PA21.8-PA21.18 COPIED_BYTE_IDENTICAL",
+          "PA21.19-PA21.31 COPIED_BYTE_IDENTICAL"
+        ]
+      },
+      {
+        "core_version": "1.6.0-rc1",
+        "files": 163,
+        "manifest_release": "PA21.2",
+        "manifest_source_package": "PA_LCTL_1.6.0_RC1_SHARED",
+        "package": "PA_SHARED_PA21.2",
+        "sha256sums_entries": 162,
+        "sha256sums_sha256": "f44d0e862fd31911353e6eaee7673e1a1a47b68ba35ba574f4ec4306472d951e",
+        "updates_applied": [
+          "PA21.6",
+          "PA21.7",
+          "PA21.8-PA21.18 COPIED_BYTE_IDENTICAL",
+          "PA21.19-PA21.31 COPIED_BYTE_IDENTICAL"
+        ]
+      },
+      {
+        "core_version": "1.6.0-rc1",
+        "files": 216,
+        "manifest_release": "PA21.2",
+        "manifest_source_package": "PA_Security_Policy_Language_LCTL_1.6.0_RC1_HYPERFEDERATED_EXECUTION_FABRIC",
+        "package": "PA_Security_Policy_Language_PA21.2",
+        "sha256sums_entries": 215,
+        "sha256sums_sha256": "b773111b502604c835045f790be21b2ceaa24230dc28528dff3ad15969af3103",
+        "updates_applied": [
+          "PA21.6",
+          "PA21.7",
+          "PA21.8-PA21.18 COPIED_BYTE_IDENTICAL",
+          "PA21.19-PA21.31 COPIED_BYTE_IDENTICAL"
+        ]
+      },
+      {
+        "core_version": "1.6.0-rc1",
+        "files": 216,
+        "manifest_release": "PA21.2",
+        "manifest_source_package": "PA_Service_and_Protocol_Language_LCTL_1.6.0_RC1_HYPERFEDERATED_EXECUTION_FABRIC",
+        "package": "PA_Service_and_Protocol_Language_PA21.2",
+        "sha256sums_entries": 215,
+        "sha256sums_sha256": "7c2d2a60d7424f1ad5068bea017bce68d7ed780c473296a3e6661f3d63bc8ca5",
+        "updates_applied": [
+          "PA21.6",
+          "PA21.7",
+          "PA21.8-PA21.18 COPIED_BYTE_IDENTICAL",
+          "PA21.19-PA21.31 COPIED_BYTE_IDENTICAL"
+        ]
+      },
+      {
+        "core_version": "1.6.0-rc1",
+        "files": 216,
+        "manifest_release": "PA21.2",
+        "manifest_source_package": "PA_Smithson_8S_Installer_LCTL_1.6.0_RC1_HYPERFEDERATED_EXECUTION_FABRIC",
+        "package": "PA_Smithson_8S_Installer_PA21.2",
+        "sha256sums_entries": 215,
+        "sha256sums_sha256": "e4d560deb5f71295c4057ee90f8f825e95779a731450c849641a9eb5cb590811",
+        "updates_applied": [
+          "PA21.6",
+          "PA21.7",
+          "PA21.8-PA21.18 COPIED_BYTE_IDENTICAL",
+          "PA21.19-PA21.31 COPIED_BYTE_IDENTICAL"
+        ]
+      },
+      {
+        "core_version": "1.6.0-rc1",
+        "files": 216,
+        "manifest_release": "PA21.2",
+        "manifest_source_package": "PA_Test_Simulation_and_Proof_Language_LCTL_1.6.0_RC1_HYPERFEDERATED_EXECUTION_FABRIC",
+        "package": "PA_Test_Simulation_and_Proof_Language_PA21.2",
+        "sha256sums_entries": 215,
+        "sha256sums_sha256": "53967ea72d13d93fb32ee6f01f98ad2e7a13499cd216fef68d1e1d2bb1087b80",
+        "updates_applied": [
+          "PA21.6",
+          "PA21.7",
+          "PA21.8-PA21.18 COPIED_BYTE_IDENTICAL",
+          "PA21.19-PA21.31 COPIED_BYTE_IDENTICAL"
+        ]
+      },
+      {
+        "core_version": "1.6.0-rc1",
+        "files": 216,
+        "manifest_release": "PA21.2",
+        "manifest_source_package": "PA_Training_and_Evaluation_Language_LCTL_1.6.0_RC1_HYPERFEDERATED_EXECUTION_FABRIC",
+        "package": "PA_Training_and_Evaluation_Language_PA21.2",
+        "sha256sums_entries": 215,
+        "sha256sums_sha256": "cb1f8b4cd2a62d9686d90a11da17514c972d6c5cc1af4f97d5cd842406563197",
+        "updates_applied": [
+          "PA21.6",
+          "PA21.7",
+          "PA21.8-PA21.18 COPIED_BYTE_IDENTICAL",
+          "PA21.19-PA21.31 COPIED_BYTE_IDENTICAL"
+        ]
+      }
+    ],
+    "pacore_files": 21,
+    "pacore_tree_sha256": "046a9930c61b1d5a8a98de87b65feb933f8c5979351289953ea72dead5e304a0",
+    "release_documents": [
+      {
+        "path": "PA21.2/PA21.2_RELEASE_REPORT.md",
+        "sha256": "569cf54e3ce61d93843d70db234f76e73c5431a249a2a4574a5293d74e614ada"
+      },
+      {
+        "path": "PA21.2/PA21.2_INDEX.json",
+        "sha256": "de42b0339607607683459ff1aab3c2c9b0ed6c2c1ba2d0ba6ae905f2449aad69"
+      },
+      {
+        "path": "PA21.2/RELEASE_NOTES_PA21_3.md",
+        "sha256": "18188065e4b10e1ea1dce38a4e7d30cf46ce89733717ccd42df39c338058cd2a"
+      },
+      {
+        "path": "PA21.2/PA21.18_PLAN_EXECUTION_REPORT.md",
+        "sha256": "61212ca1a163ff5f93064a08c5a303567f317885635f47a0d26cbc249b56dd0e"
+      },
+      {
+        "path": "PA21.2/PA21.31_PLAN_EXECUTION_REPORT.md",
+        "sha256": "9f8cb2ab543cf521734412260a16eebfea314facc43d3467b1e414615175f3c8"
+      },
+      {
+        "path": "PA21.2/mssl_to_lctlc.py",
+        "sha256": "091571735ce57d1c54da29cb9ea56726413cf157dba52776a72ddf87e5d5c739"
+      }
+    ],
+    "root": "Desktop/PA21.2"
+  },
+  "schema": "DF/SOURCE_AUTHORITY/1",
+  "statement": "The language corpora are the 22 PA21.2 packages (plus PA21.2_EVIDENCE) exactly as they were on worklaptop1 when this release was assembled -- the folders, which carry the PA21.6/7/18/31 updates, not the older *.zip snapshots beside them. All 22 packages carry byte-identical spec/, reference/pacore and pamath trees; the language was read from PA_Language_PA21.2 and the digests below let anyone confirm the others are the same. None of the corpora was modified.",
+  "translation_rules": [
+    {
+      "area": "container",
+      "id": "T1",
+      "rule": "One VM package becomes one DF node container: the package is embedded byte-identical under vm/<package>/ and pinned by node/PAYLOAD_DIGEST.json; nothing inside it is edited."
+    },
+    {
+      "area": "identity",
+      "id": "T2",
+      "rule": "The VM becomes a fabric node (DECLARE_NODE) with a stable node_id, worker_id, worker group (its ISA lineage), execution domain (its vendor lineage) and federation DF0, expressed as a PA-LCTL bundle (node/NODE.pal) and as pacore.fabric objects (Worker/WorkerGroup/ExecutionDomain/Federation)."
+    },
+    {
+      "area": "adapter",
+      "id": "T3",
+      "rule": "The VM is bound through the PA-LCTL target-adapter ABI (PA-LCTL/TARGET_ADAPTER/1): attest / topology / feature_class / limits / calibration / submit / result / provenance, in the shape of pacore.adapters.bottlerocket, failing closed."
+    },
+    {
+      "area": "execution",
+      "id": "T4",
+      "rule": "The unit of execution moved to a node is the sealed PA-LCTL row sequence, lowered to the node's own guest dialect as a row-sequence witness (DF/ROW_WITNESS_LOWERING/1, generalising PA-LCTL/BR-LOWERING/1 by a caller-supplied accumulator); images are never moved between nodes."
+    },
+    {
+      "area": "bounds",
+      "id": "T5",
+      "rule": "Every measured bound of the VM (instructions per image, step budget, memory) becomes a stated limit; exceeding a limit is a refusal (SUPPORTED_WITH_LIMITS), never a truncation."
+    },
+    {
+      "area": "gates",
+      "id": "T6",
+      "rule": "The VM's own build and acceptance gate are re-run from the delivered bytes with the VM's stock flags; only observed results are recorded, in conformance/DF_GATE_RESULTS.json."
+    },
+    {
+      "area": "status",
+      "id": "T7",
+      "rule": "Capabilities are stated in the corpora's status vocabulary (BLOCKED / SPECIFIED / SCAFFOLDED / IMPLEMENTED / VERIFIED / OPERATIONAL / QUALIFIED, plus BLOCKED_EXTERNAL_AUTHORITY and BLOCKED_CAPABILITY_ABSENT); OPERATIONAL requires a passing gate cited by path."
+    },
+    {
+      "area": "blockers",
+      "id": "T8",
+      "rule": "The VM's self-reported blockers are restated verbatim and inherited, never laundered; binding a VM to the fabric closes none of them."
+    },
+    {
+      "area": "firewall",
+      "id": "T9",
+      "rule": "No adapter may claim PHYSICAL_TARGET_AUTHENTICATED or an execution label outside CLASSICAL_*; PHYSICAL_PARALLEL_QPU_EXECUTION and PHYSICAL_DISTRIBUTED_QPU_EXECUTION remain BLOCKED_EXTERNAL_AUTHORITY; NETWORK=deny and BACKEND=none are inherited unchanged."
+    },
+    {
+      "area": "entry points",
+      "id": "T10",
+      "rule": "Every container exposes exactly BUILD / VERIFY / RUN (plus .cmd twins) and a REQUIREMENTS.txt checked first by VERIFY, so a missing dependency is a diagnostic (SKIPPED with a reason), not a failure."
+    },
+    {
+      "area": "core",
+      "id": "T11",
+      "rule": "The PA-LCTL reference core (reference/pacore, spec/, examples/) is carried byte-identically in every container under core/ and pinned by core/PACORE_DIGEST.json; the fabric container checks that the same digest appears in all five."
+    },
+    {
+      "area": "fabric",
+      "id": "T12",
+      "rule": "The four nodes are federated by DF_Fabric: a pacore.fabric Federation, TaskRuntime programs in all four execution profiles, one append-only EventLog sealed and replay-checked, BSP supersteps and collectives with explicit transfer schedules; distributed_state is capped at DISTRIBUTED_CLASSICAL_EMULATION (one host, local processes)."
+    }
+  ],
+  "vm_audits_read": [
+    {
+      "path": "Desktop/VMs/VM_CONTAINER_AUDIT.md",
+      "sha256": "948d5e1db42f988c7fe775d405935b0630eee33687a499e33c724f80889c3a6c"
+    },
+    {
+      "path": "Desktop/VMs/CHANGES_AUDIT_FIXES.md",
+      "sha256": "5a90c1fa4e7a97335bd47cae92a2b4e4a53b87a01e3d31bac4cac2126685a5de"
+    }
+  ],
+  "vm_containers": [
+    {
+      "bytes": 37061,
+      "container": "Small",
+      "mtime_utc": "2026-08-16T22:44:34Z",
+      "sha256": "3fd95ec274d475d759d60832b413fbff9e3a8db5003da7e34a3c37d5b3b79fab",
+      "zip": "Desktop/VMs/Small.zip"
+    },
+    {
+      "bytes": 578137,
+      "container": "Medium",
+      "mtime_utc": "2026-08-16T22:44:33Z",
+      "sha256": "fcc7ec8e027d187fa00ab7bc7bb9e69a98f35c362931bc6a6b636541ce9f9c1a",
+      "zip": "Desktop/VMs/Medium.zip"
+    },
+    {
+      "bytes": 1391242,
+      "container": "Large",
+      "mtime_utc": "2026-08-16T22:44:33Z",
+      "sha256": "94b612d849d9990906e8090ae6576cf187a2154349acd2c44a821b43a4da7574",
+      "zip": "Desktop/VMs/Large.zip"
+    },
+    {
+      "bytes": 8407854,
+      "container": "Xtra_Large",
+      "mtime_utc": "2026-08-16T22:44:33Z",
+      "sha256": "cea7cb3704c24e89cc95470b721faaf38aa54ac597530a50e5a9ee0700e8d4ca",
+      "zip": "Desktop/VMs/Xtra_Large.zip"
+    }
+  ]
+}

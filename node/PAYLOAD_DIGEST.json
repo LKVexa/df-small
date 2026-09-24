@@ -1,0 +1,117 @@
+{
+  "archive_layout": "one top-level directory BOTTLE_ROCKET_3.0.0_MODEL_OPERATIONAL_110K/",
+  "df_release": "DF-PA21.2-1.0.1",
+  "embedded_at": "vm/BOTTLE_ROCKET_3.0.0_MODEL_OPERATIONAL_110K/",
+  "file_count": 20,
+  "files": [
+    {
+      "path": "MANIFEST.json",
+      "bytes": 864,
+      "sha256": "b04682f6f0c223c33d7c9c59674284940fba1a0edfcd029aff55eea3ab235137"
+    },
+    {
+      "path": "Makefile",
+      "bytes": 2953,
+      "sha256": "5111c9d32f3aed166287b0455df4e4375fdbbe3fa60786d5c3397fc08d72c498"
+    },
+    {
+      "path": "README.md",
+      "bytes": 1489,
+      "sha256": "7f272b26e5725ec79d13be2d2e867fc7df24b0141bcbe2ed4bc50f8435c439fe"
+    },
+    {
+      "path": "SHA256SUMS.txt",
+      "bytes": 1593,
+      "sha256": "ba9c33398b436bd6556c6a35ef93c86031a213f438529d1100d2b64e408d7df0"
+    },
+    {
+      "path": "deploy/BOTTLE_ROCKET_SIM_CORE_3.0.0_MODEL.brimg",
+      "bytes": 176,
+      "sha256": "5b5cfcebc2448c27590d61d15ec1d20b5192064e92c34fd6f3053c306d162f54"
+    },
+    {
+      "path": "evidence/AUDIT_DIGEST.json",
+      "bytes": 542,
+      "sha256": "6cc9b7373a364bf7c14ab2d8e43af3274c1d474ff96ca933a7ac045657f9ac99"
+    },
+    {
+      "path": "evidence/OPERATIONAL.json",
+      "bytes": 612,
+      "sha256": "3d18a8886c1a08a243691d72f4447eb0df92ceb3a80ad975037d3758fe95196e"
+    },
+    {
+      "path": "evidence/SIZE.json",
+      "bytes": 252,
+      "sha256": "e2a287d771fbc63896d05ded8b678616b725682f64da81a3a0db15e2a30fb04d"
+    },
+    {
+      "path": "evidence/q17/SIDECAR.json",
+      "bytes": 188,
+      "sha256": "ff88c39ca4bdc68c6bdf7d4206fc22f782575b90881505fde5aa4171c2bb6c74"
+    },
+    {
+      "path": "examples/boot.mssl",
+      "bytes": 189,
+      "sha256": "0589cb1f9a87c09afbdfa1f1221f742dc744e4cb5dbc138a434450293a28c2ef"
+    },
+    {
+      "path": "host/br_sizes.c",
+      "bytes": 622,
+      "sha256": "0670046b86577784c86337eec18a93659343724566053c9b31814a8c782d06bc"
+    },
+    {
+      "path": "host/brctl.c",
+      "bytes": 12239,
+      "sha256": "e93f71d43b9033cb83bdaf16223a339d4ca934221db7c11e944385178163b650"
+    },
+    {
+      "path": "spec/BR_SPEC.json",
+      "bytes": 1158,
+      "sha256": "bed075f2b65efbde7e4c9cfa4a32f8e7ba9bcf321259701f8fed259c64ba9cab"
+    },
+    {
+      "path": "spec/PROFILE.md",
+      "bytes": 815,
+      "sha256": "271c60e4a5590c4f2c51dbcd912858e2d8be40204b0f5a8ab7bc95e17be25416"
+    },
+    {
+      "path": "src/CORE.mssl",
+      "bytes": 658,
+      "sha256": "6c2886e06fff8d7e0aaa923473b5a977ce3896f3f4eccfac30539c65b6c33911"
+    },
+    {
+      "path": "src/brasm.c",
+      "bytes": 9549,
+      "sha256": "2d9913ab74af7fe140c90a694fc4ec53272d635eb36a56a9c8d2d8668b8743dd"
+    },
+    {
+      "path": "src/brasm.h",
+      "bytes": 232,
+      "sha256": "47764b106f50efb404cc42eafe1f49bac3bcf782e8fe73f76bd7d51539ab5912"
+    },
+    {
+      "path": "src/brvm.c",
+      "bytes": 69674,
+      "sha256": "ad2a1b37ebff6a6c5ecf3096642781734cf16fc5496dbff8ce15ea74ebd6f2a0"
+    },
+    {
+      "path": "src/brvm.h",
+      "bytes": 5482,
+      "sha256": "71edc58d50fd1740555721d5a7cc57f12bb9caa254330118a76eba749cf9fd0d"
+    },
+    {
+      "path": "tests/test_main.c",
+      "bytes": 273,
+      "sha256": "22ca7aa2340282df211f66bf36ffbae541c6e2a239ead2f40ac9d65453e8f363"
+    }
+  ],
+  "node_id": "N_SMALL",
+  "note": "Hardened derivation of the original archive. Original digest evidence and every changed file are retained under provenance/. Runtime ISA/ABI labels retain their upstream version.",
+  "schema": "DF/PAYLOAD_DIGEST/1",
+  "source_zip": "Desktop/VMs/Small.zip",
+  "total_bytes": 109560,
+  "tree_sha256": "1360081fb8a16c3bcf4d0e5d3c632308f82e7b35cf2a3daf73a2d330f4e07cba",
+  "zip_bytes": 37061,
+  "zip_sha256": "3fd95ec274d475d759d60832b413fbff9e3a8db5003da7e34a3c37d5b3b79fab",
+  "derivation": "provenance/PAYLOAD_CHANGES.json"
+}

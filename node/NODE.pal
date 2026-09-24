@@ -1,0 +1,23 @@
+#PA-LCTL/1.6
+#PROFILE pa.lctl.quantum.parallel.distributed
+#NETWORK deny
+#BACKEND none
+#COLUMNS ROW¦FACE¦LANE¦QSPACE¦OP¦OUT¦CTRL¦A¦B¦PARAM¦TYPE¦BASIS¦REGIME¦ASSUME¦ERROR¦RESOURCE¦CONF¦PROOF¦DOMAIN¦NODE¦LINK¦FAMILY
+R000¦FEDERATION¦-¦-¦DECLARE_FEDERATION¦DF0¦-¦-¦-¦-¦federation¦-¦EXACT¦-¦-¦trust=LOCAL_TRUSTED;network=deny;backend=none;release=DF-PA21.2-1.0.0¦1.0¦DF_PROVENANCE¦-¦-¦-¦-
+R001¦FEDERATION¦-¦-¦DECLARE_DOMAIN¦D_BR¦-¦-¦-¦-¦execution_domain¦-¦EXACT¦-¦-¦lineage=BOTTLE_ROCKET;trust=LOCAL_TRUSTED¦1.0¦-¦-¦-¦-¦-
+R002¦TOPOLOGY¦-¦-¦DECLARE_NODE¦N_SMALL¦-¦-¦-¦-¦node¦-¦EXACT¦-¦-¦device=classical_vm;worker=W_SMALL;group=G_BR3;failure_domain=FD_SMALL;dialect=MSSL_ASM-1;word_bits=1048576;registers=16;opcodes=24;memory_bytes=4096;qubits=0¦1.0¦NODE_DESCRIPTOR¦D_BR¦-¦-¦-
+R003¦TOPOLOGY¦-¦-¦DECLARE_TOPOLOGY¦T_SMALL¦-¦-¦-¦-¦topology¦-¦EXACT¦-¦-¦nodes=1;domains=1;qcapacity=0¦1.0¦-¦-¦-¦-¦-
+R010¦RESOURCE¦-¦-¦CLAIM¦-¦-¦-¦-¦-¦resource_report¦-¦EXACT¦-¦-¦max_rows_per_lowering=84;instruction_ceiling=256;cli_step_budget=4096;memory_bytes=4096;ram_per_live_vm_bytes=35926544¦1.0¦DF_GATE_A5¦D_BR¦N_SMALL¦-¦-
+R011¦RESOURCE¦-¦-¦CLAIM¦-¦-¦-¦-¦-¦resource_claim¦-¦EXACT¦-¦-¦cpu_slots=1;qpu_slots=0;ebit_budget=0¦1.0¦NODE_DESCRIPTOR¦D_BR¦N_SMALL¦-¦-
+R020¦EVIDENCE¦-¦-¦CLAIM¦-¦-¦-¦-¦-¦proof_record¦-¦EXACT¦-¦-¦claim=row_sequence_witness_native_execution;class=SUPPORTED_WITH_LIMITS;result_register=R2¦1.0¦DF_GATE_A3¦D_BR¦N_SMALL¦-¦CLASSICAL_REPLICA_PARALLEL
+R021¦EVIDENCE¦-¦-¦CLAIM¦-¦-¦-¦-¦-¦proof_record¦-¦EXACT¦-¦-¦claim=segmented_witness;class=SUPPORTED¦1.0¦DF_FABRIC_GATE_F6¦D_BR¦N_SMALL¦-¦TASK_PARALLEL
+R022¦EVIDENCE¦-¦-¦CLAIM¦-¦-¦-¦-¦-¦proof_record¦-¦EXACT¦-¦-¦claim=image_signing;class=SUPPORTED¦1.0¦DF_GATE_A3¦D_BR¦N_SMALL¦-¦-
+R023¦EVIDENCE¦-¦-¦CLAIM¦-¦-¦-¦-¦-¦proof_record¦-¦EXACT¦-¦-¦claim=independent_image_verification;class=UNSUPPORTED¦1.0¦DF_GATE_A3¦D_BR¦N_SMALL¦-¦-
+R024¦EVIDENCE¦-¦-¦CLAIM¦-¦-¦-¦-¦-¦proof_record¦-¦EXACT¦-¦-¦claim=deterministic_replay;class=SUPPORTED¦1.0¦DF_GATE_A7¦D_BR¦N_SMALL¦-¦-
+R025¦EVIDENCE¦-¦-¦CLAIM¦-¦-¦-¦-¦-¦proof_record¦-¦EXACT¦-¦-¦claim=declared_step_budget;class=SUPPORTED¦1.0¦DF_GATE_A6¦D_BR¦N_SMALL¦-¦-
+R030¦MODEL¦-¦-¦NOTE¦-¦-¦-¦-¦-¦proof_record¦-¦UNSUPPORTED¦quantum_face_execution=UNSUPPORTED;native_gate_set=empty;qubits=0¦-¦-¦1.0¦DF_GATE_A1¦D_BR¦N_SMALL¦-¦-
+R031¦MODEL¦-¦-¦NOTE¦-¦-¦-¦-¦-¦proof_record¦-¦UNSUPPORTED¦classical_face_execution=BLOCKED_CAPABILITY_ABSENT;roadmap=DF_NODE_SPEC_s10¦-¦-¦1.0¦-¦D_BR¦N_SMALL¦-¦-
+R032¦MODEL¦-¦-¦NOTE¦-¦-¦-¦-¦-¦proof_record¦-¦IMPOSSIBLE¦physical_target=BLOCKED_EXTERNAL_AUTHORITY;trust_domain=LOCAL_TRUSTED;label=CLASSICAL_NATIVE_VM_BOUNDED_EXECUTION¦-¦-¦1.0¦DF_GATE_A2¦D_BR¦N_SMALL¦-¦-
+R033¦MODEL¦-¦-¦NOTE¦-¦-¦-¦-¦-¦proof_record¦-¦EXACT¦target_blockers_inherited_verbatim=true;see=DF_BLOCKED_REGISTER¦-¦-¦1.0¦DF_GATE_A1¦D_BR¦N_SMALL¦-¦-
+R040¦ASSERT¦-¦-¦ASSERT_INVARIANT¦-¦-¦-¦-¦-¦proof_record¦-¦EXACT¦native_witness_equals_cpython_reference;or_refuse¦-¦-¦1.0¦DF_GATE_A3¦D_BR¦N_SMALL¦-¦-
+R050¦LEDGER¦-¦-¦EMIT_LEDGER¦-¦-¦-¦-¦-¦proof_record¦-¦EXACT¦-¦-¦ledger=DF_CAPABILITY_LEDGER;gates=G0.1|G0.2|G0.3|G0.4|G1|G2|G3|N0|N1|A1|A2|A3|A4|A5|A6|A7|A8|A9¦1.0¦DF_GATE_RESULTS¦D_BR¦N_SMALL¦-¦-

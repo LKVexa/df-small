@@ -1,0 +1,509 @@
+{
+  "adapter_root": "/tmp/df-verify-n_small-xdoy64sd/BOTTLE_ROCKET_3.0.0_MODEL_OPERATIONAL_110K",
+  "container_root": "/home/claude/work/df/out/DF_Small",
+  "df_release": "DF-PA21.2-1.0.0",
+  "executed_at_utc": "2026-08-17T01:30:36.238833Z",
+  "gates": [
+    {
+      "detail": {
+        "reason": "SHA256SUMS.txt not present (pre-seal assembly run)"
+      },
+      "id": "G0.1",
+      "name": "container SHA256SUMS.txt verifies (every delivered byte)",
+      "seconds": 0.0,
+      "status": "SKIPPED"
+    },
+    {
+      "detail": {
+        "reason": "MANIFEST.json not present (pre-seal assembly run)"
+      },
+      "id": "G0.2",
+      "name": "MANIFEST.json inventory matches disk (paths, sizes, digests; no extras)",
+      "seconds": 0.0,
+      "status": "SKIPPED"
+    },
+    {
+      "detail": {
+        "expected_files": 20,
+        "extra": [],
+        "found_files": 20,
+        "missing": [],
+        "pass": true,
+        "tree_sha256_expected": "1cf22c38121bcd3b6d56944426ca137129a0f7bfeac5803d38a1bd2b087adc3a",
+        "tree_sha256_found": "1cf22c38121bcd3b6d56944426ca137129a0f7bfeac5803d38a1bd2b087adc3a"
+      },
+      "id": "G0.3",
+      "name": "embedded VM payload byte-identical to the pinned digest (source zip content)",
+      "seconds": 0.001,
+      "status": "PASS"
+    },
+    {
+      "detail": {
+        "expected": "046a9930c61b1d5a8a98de87b65feb933f8c5979351289953ea72dead5e304a0",
+        "files": 21,
+        "found": "046a9930c61b1d5a8a98de87b65feb933f8c5979351289953ea72dead5e304a0",
+        "pinned_from": "PA_Language_PA21.2/reference/pacore (byte-identical in all 22 PA21.2 packages)"
+      },
+      "id": "G0.4",
+      "name": "core/pacore tree digest equals the pinned digest (one core, many consumers)",
+      "seconds": 0.003,
+      "status": "PASS"
+    },
+    {
+      "detail": {
+        "corpus_records_validated": 31,
+        "not_yet_present_pre_seal": [
+          "MANIFEST.json"
+        ],
+        "validated": [
+          "node/NODE_DESCRIPTOR.json",
+          "conformance/DF_GATE_RESULTS.json",
+          "reports/DF_CAPABILITY_LEDGER.json",
+          "provenance/DF_PROVENANCE.json",
+          "authority/DF_SOURCE_AUTHORITY.json"
+        ],
+        "violations": {}
+      },
+      "id": "G2",
+      "name": "every JSON artifact validates against the schema shipped beside it",
+      "seconds": 0.002,
+      "status": "PASS"
+    },
+    {
+      "detail": {
+        "items": 22,
+        "unresolved": []
+      },
+      "id": "G3",
+      "name": "every evidence citation in the capability ledger resolves to a delivered path",
+      "seconds": 0.0,
+      "status": "PASS"
+    },
+    {
+      "detail": {
+        "returncode": 0,
+        "seconds": 0.587
+      },
+      "id": "G1",
+      "name": "reference core selfcheck (python3 -B -m reference.pacore.cli selfcheck) -> SELFCHECK_PASS",
+      "seconds": 0.587,
+      "status": "PASS"
+    },
+    {
+      "detail": {
+        "can_build": true,
+        "declared": [
+          "C11 compiler (cc/gcc/clang)",
+          "GNU make",
+          "OpenSSL 3 libcrypto headers+lib (-lcrypto)",
+          "POSIX sh"
+        ],
+        "found": {
+          "cc": "/usr/bin/cc",
+          "java": "/usr/bin/java",
+          "make": "/usr/bin/make",
+          "openssl_headers": true,
+          "python3": "/usr/bin/python3",
+          "sh": "/usr/bin/sh",
+          "sha256sum": "/usr/bin/sha256sum"
+        },
+        "missing": [],
+        "node_id": "N_SMALL"
+      },
+      "id": "N0",
+      "name": "toolchain preflight against REQUIREMENTS.txt",
+      "seconds": 0.0,
+      "status": "PASS"
+    },
+    {
+      "detail": {
+        "failed_steps": {},
+        "note": "run in a scratch copy; the sealed payload is never mutated",
+        "scratch_root": "/tmp/df-verify-n_small-xdoy64sd/BOTTLE_ROCKET_3.0.0_MODEL_OPERATIONAL_110K",
+        "steps": {
+          "build": {
+            "returncode": 0,
+            "seconds": 2.95,
+            "tail": "mkdir -p .build\ncc -Isrc -std=c11 -O2 -Wall -Wextra -Werror -fno-common -fstack-protector-strong src/brvm.c src/brasm.c host/brctl.c -o .build/brctl -lcrypto\ncc -Isrc -std=c11 -O2 -Wall -Wextra -Werror -fno-common -fstack-protector-strong src/brvm.c src/brasm.c tests/test_main.c -o .build/br_tests -lcrypto\ncc -Isrc -std=c11 -O2 -Wall -Wextra -Werror -fno-common -fstack-protector-strong host/br_sizes.c -o .build/br_sizes"
+          },
+          "own_gate": {
+            "returncode": 0,
+            "seconds": 26.002,
+            "tail": ".build/brctl run deploy/BOTTLE_ROCKET_SIM_CORE_3.0.0_MODEL.brimg\nstatus=2 trap=0 ip=6 image_version=3 result=PASS\nR2.low64=42\n.build/br_sizes\n{\"record\":\"BOTTLE_ROCKET.ReferenceResourceMeasurement\",\"word_bytes\":131072,\"register_bytes\":2097152,\"scratch_bytes\":262144,\"vm_inline_bytes\":12816,\"allocated_wide_bytes\":35913728,\"reference_total_bytes\":35926544}\ndistribution_uncompressed_bytes=109905 ceiling=110000"
+          },
+          "own_sums": {
+            "returncode": 0,
+            "seconds": 0.004,
+            "tail": ""
+          }
+        }
+      },
+      "id": "N1",
+      "name": "the VM's own build (stock flags) and its own acceptance gate reproduce",
+      "seconds": 28.957,
+      "status": "PASS"
+    },
+    {
+      "detail": {
+        "feature_classes": {
+          "CX": "UNSUPPORTED",
+          "ENTANGLE_LINK": "UNSUPPORTED",
+          "H": "UNSUPPORTED",
+          "MEASURE": "UNSUPPORTED",
+          "PREP0": "UNSUPPORTED",
+          "TELEPORT": "UNSUPPORTED",
+          "apdu_serve": "TARGET_SPECIFIC",
+          "bounded_termination": "SUPPORTED",
+          "classical_face_execution": "UNSUPPORTED",
+          "compile_from_source": "SUPPORTED",
+          "declared_step_budget": "SUPPORTED",
+          "deterministic_replay": "SUPPORTED",
+          "image_signing": "SUPPORTED",
+          "independent_image_verification": "UNSUPPORTED",
+          "integer_arithmetic": "SUPPORTED",
+          "quantum_face_execution": "UNSUPPORTED",
+          "row_sequence_witness": "SUPPORTED_WITH_LIMITS",
+          "segmented_row_sequence_witness": "SUPPORTED",
+          "signature_checked_execution": "SUPPORTED",
+          "wide_word_arithmetic_1048576": "SUPPORTED"
+        },
+        "label": "CLASSICAL_NATIVE_VM_BOUNDED_EXECUTION",
+        "limits": {
+          "cli_step_budget": 4096,
+          "instruction_ceiling": 256,
+          "instructions_per_row": 3,
+          "max_rows_per_lowering": 84,
+          "prologue_epilogue": 4,
+          "qubits": 0,
+          "ram_per_live_vm_bytes_measured": 35926544,
+          "segmentation": "a bundle longer than max_rows_per_lowering is executed as a chain of segments; each segment starts from the previous accumulator",
+          "shots": 1
+        },
+        "target_id": "bottle-rocket-3.0.0-model-local",
+        "toolchain": {
+          "brctl_sha256": "5a798ae457bdde2df864c0b07c6e6ed6be55a82b926bbf2c1a0a01fe25cc2ea0"
+        }
+      },
+      "id": "A1",
+      "name": "adapter attestation (PA-LCTL/TARGET_ADAPTER/1): LOCAL_TRUSTED, CLASSICAL_ label, no physical flag, empty gate set",
+      "seconds": 0.001,
+      "status": "PASS"
+    },
+    {
+      "detail": {
+        "negatives": [
+          {
+            "negative": 1,
+            "reason": "a DF adapter may not claim trust domain 'PHYSICAL_TARGET_AUTHENTICATED'; permitted: ('LOCAL_TRUSTED', 'LOCAL_UNTRUSTED')",
+            "refused": true
+          },
+          {
+            "negative": 2,
+            "reason": "execution label 'QPU_NATIVE_EXECUTION' must begin 'CLASSICAL_'",
+            "refused": true
+          },
+          {
+            "negative": 3,
+            "reason": "execution label 'CLASSICAL_HARDWARE_EXECUTION' contains forbidden token 'HARDWARE'",
+            "refused": true
+          }
+        ]
+      },
+      "id": "A2",
+      "name": "physical-evidence firewall: three physical claims are refused at construction",
+      "seconds": 0.0,
+      "status": "PASS"
+    },
+    {
+      "detail": {
+        "examples": {
+          "01_bell_pair.pal": {
+            "agree": true,
+            "extra": {},
+            "image_sha256": "5678eda3ae398d9c77f60c67601d0eb1285bbcc166142cdae3fe33ebdf320cc3",
+            "native_witness": 17360368901394384785,
+            "program_seal": "b29d31d01996f0e9b3047e9f4dcb7f5ab9b316c5bae137d9943d302b48951353",
+            "reference_witness": 17360368901394384785,
+            "rows": 12,
+            "steps": [
+              "assemble",
+              "inspect-image",
+              "keygen",
+              "sign-image",
+              "verify-image",
+              "run-signed"
+            ],
+            "wall_s": 0.0825
+          },
+          "02_ghz3.pal": {
+            "agree": true,
+            "extra": {},
+            "image_sha256": "3d03ea3a465293b01ff64d30d7bd9f32c91305573c9b3462a37cabf7f5e53dc2",
+            "native_witness": 6735235137199922533,
+            "program_seal": "18873576016d494c27f93088b559b1cc524d45655fd98bbd83d6ac409104fd7e",
+            "reference_witness": 6735235137199922533,
+            "rows": 15,
+            "steps": [
+              "assemble",
+              "inspect-image",
+              "keygen",
+              "sign-image",
+              "verify-image",
+              "run-signed"
+            ],
+            "wall_s": 0.0809
+          },
+          "03_two_lane_parallel.pal": {
+            "agree": true,
+            "extra": {},
+            "image_sha256": "34074696769798f9acfbfeaaffec39352ff172466eec28832850c0ce393a88ca",
+            "native_witness": 2035133056847448988,
+            "program_seal": "7af6e85e1b234b815230a4a0c7cb601b55d3c9837bcb15205aaa9c9e368a6490",
+            "reference_witness": 2035133056847448988,
+            "rows": 16,
+            "steps": [
+              "assemble",
+              "inspect-image",
+              "keygen",
+              "sign-image",
+              "verify-image",
+              "run-signed"
+            ],
+            "wall_s": 0.0737
+          },
+          "04_distributed_teleport.pal": {
+            "agree": true,
+            "extra": {},
+            "image_sha256": "8c073c55fee6a51303115925c9ae624f6c7391ae013182df34bdf7f90813a524",
+            "native_witness": 11114974373231215855,
+            "program_seal": "c32f67190ed34409897afec60212189864dbec013a8113d53acbf2945b3db72d",
+            "reference_witness": 11114974373231215855,
+            "rows": 15,
+            "steps": [
+              "assemble",
+              "inspect-image",
+              "keygen",
+              "sign-image",
+              "verify-image",
+              "run-signed"
+            ],
+            "wall_s": 0.0766
+          },
+          "05_measurement_feedback.pal": {
+            "agree": true,
+            "extra": {},
+            "image_sha256": "fc016b93337b5b00bfee06c72b67dafea871d8188679a2156ffcbcf214e1c21b",
+            "native_witness": 1825703198280153005,
+            "program_seal": "753b9cb030c67416a721df8c07b5a75d937c009511983fcbd5a4004663e25403",
+            "reference_witness": 1825703198280153005,
+            "rows": 14,
+            "steps": [
+              "assemble",
+              "inspect-image",
+              "keygen",
+              "sign-image",
+              "verify-image",
+              "run-signed"
+            ],
+            "wall_s": 0.0751
+          },
+          "06_noise_density.pal": {
+            "agree": true,
+            "extra": {},
+            "image_sha256": "8f595be376666871a6e98aa4a99ec1dd876e9a2aa17c9587c2aa4ad820976ae4",
+            "native_witness": 725229432034669365,
+            "program_seal": "7e0315be683ad3378924d744116e84572a241c0b2db305e9fa3c742911346144",
+            "reference_witness": 725229432034669365,
+            "rows": 14,
+            "steps": [
+              "assemble",
+              "inspect-image",
+              "keygen",
+              "sign-image",
+              "verify-image",
+              "run-signed"
+            ],
+            "wall_s": 0.0706
+          },
+          "NODE.pal": {
+            "agree": true,
+            "extra": {},
+            "image_sha256": "ed71011f40062482cada931d01890ae1486832c7f90645a4102e6a8fb0fac343",
+            "native_witness": 4232874045227803298,
+            "program_seal": "57aa6d66aa96c2bd770569452f7a1fc7c52dee61ee772b8e7e9131c4df628dcd",
+            "reference_witness": 4232874045227803298,
+            "rows": 18,
+            "steps": [
+              "assemble",
+              "inspect-image",
+              "keygen",
+              "sign-image",
+              "verify-image",
+              "run-signed"
+            ],
+            "wall_s": 0.0699
+          }
+        }
+      },
+      "id": "A3",
+      "name": "row-sequence witness executes natively and agrees with the CPython reference on 7 bundles",
+      "seconds": 0.538,
+      "status": "PASS"
+    },
+    {
+      "detail": {
+        "base": 17360368901394384785,
+        "mutations": {
+          "cell_change": {
+            "changed": true,
+            "native": 11554785166328667109,
+            "reference": 11554785166328667109
+          },
+          "row_delete": {
+            "changed": true,
+            "native": 4536442608457809243,
+            "reference": 4536442608457809243
+          },
+          "row_insert": {
+            "changed": true,
+            "native": 18384023426024859841,
+            "reference": 18384023426024859841
+          },
+          "row_reorder": {
+            "changed": true,
+            "native": 5398684778699812071,
+            "reference": 5398684778699812071
+          }
+        }
+      },
+      "id": "A4",
+      "name": "witness sensitivity: cell change, row reorder, row delete, row insert each change the native witness",
+      "seconds": 0.357,
+      "status": "PASS"
+    },
+    {
+      "detail": {
+        "at_bound_agree": true,
+        "at_bound_instructions": 256,
+        "at_bound_rows": 84,
+        "max_rows": 84,
+        "over_bound_refusal": {
+          "feature_class": "SUPPORTED_WITH_LIMITS",
+          "instruction_ceiling": 256,
+          "max_rows": 84,
+          "node": "N_SMALL",
+          "rows": 85
+        }
+      },
+      "id": "A5",
+      "name": "stated bounds are refusals: max_rows+1 refused (SUPPORTED_WITH_LIMITS), max_rows executes",
+      "seconds": 0.074,
+      "status": "PASS"
+    },
+    {
+      "detail": {
+        "last_step": {
+          "returncode": 1,
+          "stderr": "",
+          "stdout": "status=3 trap=8 ip=1 image_version=3 result=FAIL",
+          "step": "run-signed"
+        },
+        "refusal": "N_SMALL run-signed failed (exit 1)"
+      },
+      "id": "A6",
+      "name": "declared step budget is enforced: an unbounded loop traps (BUDGET / TRAP_RESOURCE) instead of running",
+      "seconds": 0.073,
+      "status": "PASS"
+    },
+    {
+      "detail": {
+        "image_sha256": [
+          "5678eda3ae398d9c77f60c67601d0eb1285bbcc166142cdae3fe33ebdf320cc3",
+          "5678eda3ae398d9c77f60c67601d0eb1285bbcc166142cdae3fe33ebdf320cc3"
+        ],
+        "note": "the signed image differs between runs on nodes that mint a fresh key per run; the unsigned image and the witness are identical",
+        "witness": 17360368901394384785
+      },
+      "id": "A7",
+      "name": "deterministic replay: the same rows lower to the same source and image and produce the same witness twice",
+      "seconds": 0.149,
+      "status": "PASS"
+    },
+    {
+      "detail": {
+        "refusals": {
+          "bad_qcir_schema": "refused: QCIR-P2 schema 'WRONG/1' is not 'PA-LCTL/QCIR-P2/1'",
+          "empty_rows": "refused: no rows to witness",
+          "shots_2": "refused: the row-sequence witness is deterministic; shots > 1 would report repeated ident"
+        }
+      },
+      "id": "A8",
+      "name": "shots > 1, a wrong QCIR-P2 schema and an empty row list are refused, never answered",
+      "seconds": 0.001,
+      "status": "PASS"
+    },
+    {
+      "detail": {
+        "result_low64": 42,
+        "result_register": "R2",
+        "steps": [
+          "assemble",
+          "inspect-image",
+          "keygen",
+          "sign-image",
+          "verify-image",
+          "run-signed"
+        ],
+        "wall_s": 0.0715
+      },
+      "id": "A9",
+      "name": "a native MSSL/ASM-1 program (examples/add42.mssl) runs and returns 42",
+      "seconds": 0.072,
+      "status": "PASS"
+    }
+  ],
+  "host": {
+    "backend_policy": "none",
+    "cc": "/usr/bin/cc",
+    "cpu_count": 2,
+    "implementation": "CPython",
+    "java": "/usr/bin/java",
+    "machine": "x86_64",
+    "make": "/usr/bin/make",
+    "network_policy": "deny",
+    "platform": "Linux-6.18.5-fc-v20-x86_64-with-glibc2.39",
+    "python": "3.11.15"
+  },
+  "node_id": "N_SMALL",
+  "preflight": {
+    "can_build": true,
+    "declared": [
+      "C11 compiler (cc/gcc/clang)",
+      "GNU make",
+      "OpenSSL 3 libcrypto headers+lib (-lcrypto)",
+      "POSIX sh"
+    ],
+    "found": {
+      "cc": "/usr/bin/cc",
+      "java": "/usr/bin/java",
+      "make": "/usr/bin/make",
+      "openssl_headers": true,
+      "python3": "/usr/bin/python3",
+      "sh": "/usr/bin/sh",
+      "sha256sum": "/usr/bin/sha256sum"
+    },
+    "missing": [],
+    "node_id": "N_SMALL"
+  },
+  "rule": "PASS means every gate that could run passed; SKIPPED gates name the missing prerequisite and are not counted as passes",
+  "schema": "DF/GATE_RESULTS/1",
+  "subject": "DF_Small (N_SMALL)",
+  "totals": {
+    "failed": 0,
+    "passed": 16,
+    "run": 18,
+    "skipped": 2,
+    "wall_seconds": 30.817
+  },
+  "verdict": "PASS"
+}

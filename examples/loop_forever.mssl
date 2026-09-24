@@ -1,0 +1,7 @@
+.profile SIM_CORE
+.image_version 3
+.request_caps CONTROL|ARITH
+MOVI.WRAP R0, 1, C0
+loop:
+JNZ.WRAP loop, C0
+HALT.WRAP C0

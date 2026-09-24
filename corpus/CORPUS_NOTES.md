@@ -1,0 +1,3 @@
+# corpus/ (DF_Small)
+
+`DF_Small_Translation_Corpus.jsonl.gz` -- 31 records, one JSON object per line, schema `schemas/DF_TRANSLATION_CORPUS_RECORD.json` (modelled on the corpora's coupling-mechanics record: a stable id, the source claim, the target text, a rule, a status, evidence and a confidence). Each record maps one claim about the VM (identity, an ISA fact, a capability, a bound, a blocker, a gate, a finding) to the PA-LCTL/fabric construct that now carries it and to the gate that evidences it. `status` uses the corpora's vocabulary; a record whose gate did not pass or could not run on the assembly host says `IMPLEMENTED`/`SKIPPED`, never `OPERATIONAL`. Findings that are observations rather than claims carry `NOT_CLAIMED`.

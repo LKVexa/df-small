@@ -1,0 +1,42 @@
+{
+  "$id": "https://df.local/schema/DF_PROVENANCE.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "properties": {
+    "ladders": {
+      "properties": {
+        "physical_distributed": {
+          "const": false
+        },
+        "physical_parallel": {
+          "const": false
+        },
+        "physical_qpu": {
+          "const": false
+        },
+        "quantum_boundary": {
+          "const": "QUANTUM_BOUNDARY_NOT_CROSSED"
+        }
+      },
+      "required": [
+        "quantum_boundary",
+        "physical_qpu",
+        "physical_parallel",
+        "physical_distributed"
+      ],
+      "type": "object"
+    },
+    "schema": {
+      "const": "DF/PROVENANCE/1"
+    }
+  },
+  "required": [
+    "schema",
+    "df_release",
+    "assembled_at_utc",
+    "assembly_host",
+    "lineage",
+    "ladders"
+  ],
+  "title": "DF provenance",
+  "type": "object"
+}

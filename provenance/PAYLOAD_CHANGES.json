@@ -1,0 +1,36 @@
+{
+  "original_tree_sha256": "1cf22c38121bcd3b6d56944426ca137129a0f7bfeac5803d38a1bd2b087adc3a",
+  "release_tree_sha256": "1360081fb8a16c3bcf4d0e5d3c632308f82e7b35cf2a3daf73a2d330f4e07cba",
+  "changes": [
+    {
+      "path": "MANIFEST.json",
+      "original_sha256": "be7341d1656cc51b61511dc14b61dea6722338da61674f1483d7dac49c98bd3c",
+      "release_sha256": "b04682f6f0c223c33d7c9c59674284940fba1a0edfcd029aff55eea3ab235137"
+    },
+    {
+      "path": "README.md",
+      "original_sha256": "8315690251ec2de5464ffabe6f881b2c301d40e1366c69dffa11b954d769aba8",
+      "release_sha256": "7f272b26e5725ec79d13be2d2e867fc7df24b0141bcbe2ed4bc50f8435c439fe"
+    },
+    {
+      "path": "SHA256SUMS.txt",
+      "original_sha256": "7341f3329367681499de94c05d3e211239e04fdb4d5d9b6ca0dab684a8d904e0",
+      "release_sha256": "ba9c33398b436bd6556c6a35ef93c86031a213f438529d1100d2b64e408d7df0"
+    },
+    {
+      "path": "host/brctl.c",
+      "original_sha256": "0862ea82f98c3914b8c485d962035ee18daba532347869bca6f83557b8ddc2ed",
+      "release_sha256": "e93f71d43b9033cb83bdaf16223a339d4ca934221db7c11e944385178163b650"
+    },
+    {
+      "path": "src/brasm.c",
+      "original_sha256": "5256b3b7015d5b3fec22bf862e05111a69b6845aad156f5adc9508dd315967fc",
+      "release_sha256": "2d9913ab74af7fe140c90a694fc4ec53272d635eb36a56a9c8d2d8668b8743dd"
+    },
+    {
+      "path": "src/brvm.c",
+      "original_sha256": "96cb5f1fdd770086d2449db630d28c353b114224b6c5995c9841223e4851ee01",
+      "release_sha256": "ad2a1b37ebff6a6c5ecf3096642781734cf16fc5496dbff8ce15ea74ebd6f2a0"
+    }
+  ]
+}

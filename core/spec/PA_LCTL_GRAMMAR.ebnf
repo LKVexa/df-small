@@ -1,0 +1,519 @@
+(* ==========================================================================
+   PA_LCTL_GRAMMAR.ebnf
+   Normative concrete grammar for the PA-LCTL source language.
+
+   AUTHORITY
+     This grammar describes exactly what `pacore.lang.parse` accepts, as
+     implemented. Where the implementation is more permissive than an idealized
+     grammar would be, the grammar below is the permissive one, because a
+     conforming reader must accept what the reference reader accepts.
+
+   PROSE PREAMBLE
+   --------------
+   A PA-LCTL bundle is a line-oriented, columned text format. `lang.parse` is a
+   single pass over `text.splitlines()`; there is no lookahead and no nesting.
+   Each line is classified by its first non-space character:
+
+     * empty or all-whitespace .................. skipped
+     * ";;" ..................................... full-line comment, skipped
+     * "#"  ..................................... magic line, #COLUMNS, or a
+                                                  directive
+     * anything else ............................ a data row
+
+   Consequences a reader must respect, all of them observable in
+   `lang.parse`:
+
+   1. THE PARSER IS TOTAL. It never raises on malformed input; it returns
+      `(program | None, diagnostics)`. Only a missing magic line produces
+      `None` (diagnostic E-GRAM-004).
+
+   2. COMMENTS ARE FULL-LINE ONLY, and the marker is ";;". There is no
+      end-of-line comment syntax. A "#" at the start of a line is a directive,
+      never a comment: writing `# this is a note` creates the directive
+      `THIS` with value `is a note`.
+
+   3. THE MAGIC LINE IS MATCHED ONCE. `lang.MAGIC_RE` is
+      `^#\s*(PA-LCTL|LCTL|QCTL)\s*/\s*(\d+\.\d+)\s*$`. The first matching line
+      sets `Program.magic`; a *second* magic-looking line is no longer special
+      and becomes a directive with a slash in its key. A conforming bundle
+      SHALL write exactly `#PA-LCTL/1.6` and SHALL write it once.
+
+   4. THE SEPARATOR IS DETECTED PER LINE. For a data row the separator is the
+      BROKEN BAR U+00A6 if the line contains one, otherwise "|" if the line
+      contains one, otherwise the line is rejected with E-GRAM-001. The
+      canonical separator is ALWAYS the broken bar on output
+      (`Row.render`, `Program.canonical_text`). "|" is an input alias only
+      (`lang.ALIAS_SEPS`).
+
+   5. CELL COUNT IS FIXED BY #COLUMNS. A data row whose cell count differs from
+      the declared column count is rejected with E-GRAM-002 and contributes no
+      row. When no #COLUMNS line has been seen before the first data row, the
+      column list defaults to `lang.FULL_COLUMNS` (all 22 columns).
+
+   6. CELLS ARE NORMALIZED, NOT VALIDATED, BY THE PARSER
+      (`lang.normalize_cell`): Unicode NFC, tab -> space, strip, internal
+      whitespace runs collapsed to one space. AN EMPTY CELL BECOMES THE NULL
+      CELL "-". Semantic validation is the verifier's job, not the parser's.
+
+   7. INDEXED REFERENCES ARE PARSED SEPARATELY, by `lang.parse_ref` using
+      `^([A-Za-z_][A-Za-z0-9_]*)(?:\[(\d+)(?::(\d+))?\])?$`. Indices are
+      non-negative decimal integers. `name[i:j]` is the HALF-OPEN range
+      [i, j); `name[3:3]` denotes no qubits. A cell that does not match is not
+      a reference; `parse_ref` returns None and the cell is treated as an
+      opaque token (this is how `MEASURE` writes a classical bit name into
+      OUT, and how DECLARE_* rows name nodes, domains and links).
+
+   8. NUMERIC LITERALS are evaluated by `lang._eval_number`, a deliberately
+      small sandbox: an optional leading sign, then a chain of factors joined
+      by "*" and "/", where each factor is either a decimal literal (Python
+      float syntax, including exponents) or one of the fixed names
+      `pi`, `PI`, `tau`, `e`. There is no general expression evaluation, no
+      parentheses, no addition, and no name lookup outside that table. A token
+      containing a character outside `[-+0-9eE.*/ ]` other than one occurrence
+      of `pi|PI|tau|e` is handed to `float()` and raises if invalid. Inside a
+      PARAM cell, a value that fails to evaluate is SKIPPED (see `Row.params`),
+      so an unparsable angle surfaces later as E-PARAM-001, not as a parse
+      error.
+
+   9. DIRECTIVE KEYS ARE UPPERCASED, values are kept verbatim after one strip.
+      A directive with no value gets the value "true".
+
+  10. LIST AND KEY/VALUE CELLS use ";" as the item separator
+      (`lang._split_list`, `lang._parse_kv`). In a k=v cell, only the FIRST
+      "=" splits; a bare item without "=" becomes `item -> "true"`.
+
+   NOTATION
+   --------
+   ISO/IEC 14977 style, with these conventions:
+     "x"        terminal
+     [ x ]      optional
+     { x }      zero or more
+     x | y      alternative
+     (* ... *)  comment
+   Character classes are given as regular expressions in comments where that
+   is clearer than an enumeration.
+   ========================================================================== *)
+
+
+(* -------------------------------------------------------------------------
+   1. Bundle
+   ------------------------------------------------------------------------- *)
+
+bundle
+    = { line } ;
+      (* A bundle is well-formed when exactly one magic_line has occurred and
+         at least one data_row was produced. A bundle with no rows still
+         parses, with diagnostic E-GRAM-005. *)
+
+line
+    = blank_line
+    | comment_line
+    | magic_line
+    | columns_line
+    | directive_line
+    | data_row ;
+
+blank_line
+    = { space } newline ;
+
+newline
+    = "\n" ;                            (* splitlines() also accepts "\r\n" *)
+
+space
+    = " " | "\t" ;
+
+
+(* -------------------------------------------------------------------------
+   2. Comments
+   ------------------------------------------------------------------------- *)
+
+comment_line
+    = { space } ";;" { any_char_but_newline } newline ;
+      (* Full line only. `;;` after the first non-space character does NOT
+         start a comment; such a line is a data row and its `;;` is ordinary
+         cell text (and, inside a list cell, two empty list items). *)
+
+
+(* -------------------------------------------------------------------------
+   3. Magic line
+   ------------------------------------------------------------------------- *)
+
+magic_line
+    = { space } "#" { space } language_tag { space } "/" { space }
+      version { space } newline ;
+
+language_tag
+    = "PA-LCTL" | "LCTL" | "QCTL" ;
+      (* `LCTL` and `QCTL` are accepted for historical bundles. A conforming
+         PA-LCTL bundle SHALL use `PA-LCTL`. *)
+
+version
+    = digit { digit } "." digit { digit } ;
+      (* Exactly two dot-separated numeric components; `1.6` matches,
+         `1.6.0` does not and would be read as a directive. *)
+
+
+(* -------------------------------------------------------------------------
+   4. #COLUMNS
+   ------------------------------------------------------------------------- *)
+
+columns_line
+    = { space } "#" "COLUMNS" whitespace column_list newline ;
+      (* The key is matched case-insensitively because `lang.parse`
+         uppercases it: `#columns` and `#Columns` are equivalent. *)
+
+column_list
+    = column_name { separator column_name } ;
+      (* The separator inside a #COLUMNS value is the broken bar if the value
+         contains one, otherwise "|". If it contains neither, the whole value
+         is taken as ONE column name. Names are stripped and uppercased. *)
+
+column_name
+    = letter { letter | digit | "_" } ;
+      (* Recognized names are the 22 in `lang.FULL_COLUMNS`. An unrecognized
+         name is accepted by the parser and simply never read; every column in
+         FULL_COLUMNS that the header omits is filled with the null cell. *)
+
+separator
+    = broken_bar | vertical_bar ;
+
+broken_bar
+    = "¦" ;                        (* canonical, `lang.CANONICAL_SEP` *)
+
+vertical_bar
+    = "|" ;                             (* input alias, `lang.ALIAS_SEPS` *)
+
+
+(* -------------------------------------------------------------------------
+   5. Directives
+   ------------------------------------------------------------------------- *)
+
+directive_line
+    = { space } "#" directive_key [ whitespace directive_value ] newline ;
+
+directive_key
+    = key_char { key_char } ;           (* any non-space run; uppercased *)
+
+key_char
+    = ? any character except whitespace and newline ? ;
+
+directive_value
+    = { any_char_but_newline } ;        (* stripped; empty value becomes "true" *)
+
+whitespace
+    = space { space } ;
+
+(* Normative directives for the reference profile:
+
+       #PROFILE  pa.lctl.quantum.parallel.distributed
+       #NETWORK  deny        (* anything else -> E-POL-001 *)
+       #BACKEND  none        (* anything else -> E-POL-002 *)
+
+   `Program.profile`, `Program.network_policy` and `Program.backend_policy`
+   default to `pa.lctl.core`, `deny` and `none` respectively when the
+   directive is absent. All other directives are carried verbatim into
+   `Program.directives` and are part of the canonical text, hence part of the
+   seal. *)
+
+
+(* -------------------------------------------------------------------------
+   6. Data rows and cells
+   ------------------------------------------------------------------------- *)
+
+data_row
+    = cell { separator cell } newline ;
+      (* The number of cells SHALL equal the declared column count; otherwise
+         E-GRAM-002 and the row is dropped. All cells on one line use the same
+         separator, chosen per line as described in preamble note 4. *)
+
+cell
+    = null_cell
+    | scalar_cell
+    | ref_cell
+    | list_cell
+    | kv_cell
+    | number_cell ;
+      (* This alternation is SEMANTIC, not syntactic: at the lexical level a
+         cell is simply "a run of characters not containing the line's
+         separator", normalized by `lang.normalize_cell`. Which of the forms
+         below applies is decided by the column, by `parse_ref`, by
+         `_split_list`, by `_parse_kv` and by `_eval_number`. *)
+
+null_cell
+    = "-" ;
+      (* `lang.NULL_CELL`. An empty or all-whitespace cell is normalized to
+         this. There is therefore no way to express "the empty string" as a
+         cell value. *)
+
+scalar_cell
+    = token ;
+
+token
+    = token_char { token_char } ;
+
+token_char
+    = ? any character except the line separator, newline and tab ? ;
+      (* Tabs are converted to spaces by `normalize_cell`. Internal runs of
+         whitespace collapse to a single space, so `q [0]` normalizes to
+         `q [0]`, which does NOT match `parse_ref`. Write references without
+         internal spaces. *)
+
+
+(* -------------------------------------------------------------------------
+   7. Object references
+   ------------------------------------------------------------------------- *)
+
+ref_cell
+    = identifier [ index_suffix ] ;
+      (* Matched by `lang._QREF`. Anything else is not a reference. *)
+
+identifier
+    = ( letter | "_" ) { letter | digit | "_" } ;
+
+index_suffix
+    = "[" index [ ":" index ] "]" ;
+
+index
+    = digit { digit } ;                 (* non-negative decimal only *)
+
+(* Semantics (`lang.QRef`):
+
+       name         -> keys = [ "name" ]                   (unindexed)
+       name[i]      -> keys = [ "name[i]" ]                (single element)
+       name[i:j]    -> keys = [ "name[i]", ..., "name[j-1]" ]   (half-open)
+
+   `QRef.key()` returns the first key; `QRef.keys()` returns them all.
+   `name[i:j]` with j <= i denotes the empty set of objects, which is legal
+   syntax and normally an arity error at the verifier (E-ARITY-001).
+   `QSPACE` conventionally carries a range such as `q[0:2]`; operand columns
+   conventionally carry single elements such as `q[0]`. Negative indices,
+   steps, and non-numeric indices are NOT part of the language. *)
+
+
+(* -------------------------------------------------------------------------
+   8. Semicolon lists and key/value metadata
+   ------------------------------------------------------------------------- *)
+
+list_cell
+    = list_item { ";" list_item } ;
+      (* `lang._split_list`: items are stripped; empty items are dropped.
+         Used by ASSUME. *)
+
+list_item
+    = { token_char_except_semicolon } ;
+
+token_char_except_semicolon
+    = ? token_char except ";" ? ;
+
+kv_cell
+    = kv_item { ";" kv_item } ;
+      (* `lang._parse_kv`. Used by ERROR, RESOURCE and (optionally) PARAM. *)
+
+kv_item
+    = kv_key [ "=" kv_value ]
+    | flag_key ;
+
+kv_key
+    = { token_char_except_semicolon_or_equals } ;
+
+kv_value
+    = { token_char_except_semicolon } ;
+      (* Only the FIRST "=" splits, so `note=a=b` yields note -> "a=b". *)
+
+flag_key
+    = { token_char_except_semicolon_or_equals } ;
+      (* A bare item with no "=" is recorded as key -> "true". *)
+
+token_char_except_semicolon_or_equals
+    = ? token_char except ";" and "=" ? ;
+
+(* Keys read by the reference implementation:
+
+     RESOURCE   device            -> SESNode.device_class      (default "cpu")
+                duration          -> SESNode.duration_model    (default: the
+                                     family default in `ses.DURATION_UNITS`)
+                failure_domain    -> SESNode.failure_domain
+                memory            -> partition/placement memory accounting
+                fidelity          -> declared link fidelity (DECLARE_LINK)
+                angle             -> parameter fallback for the matrix oracle
+     ERROR      p | value         -> error-term magnitude
+                unit, kind, domain, independence
+                                  -> error-term typing (`erroralgebra`)
+                approx=true       -> forbidden with an exact REGIME
+                                     (E-REG-003)
+   Unknown keys are preserved and ignored. *)
+
+
+(* -------------------------------------------------------------------------
+   9. Numeric literals
+   ------------------------------------------------------------------------- *)
+
+number_cell
+    = number { ";" number }
+    | kv_cell ;                         (* PARAM accepts `k=v`; the value after
+                                           the first "=" is evaluated *)
+
+number
+    = [ sign ] factor { mul_op factor } ;
+
+sign
+    = "+" | "-" ;
+
+mul_op
+    = "*" | "/" ;
+
+factor
+    = decimal_literal | named_constant ;
+
+named_constant
+    = "pi" | "PI" | "tau" | "e" ;
+      (* `lang._NUM_TOKENS`:
+             pi, PI -> 3.141592653589793
+             tau    -> 6.283185307179586
+             e      -> 2.718281828459045   *)
+
+decimal_literal
+    = ? Python float syntax: digits, optional ".", optional exponent ? ;
+      (* e.g. 0, 1.0, .5, 1e-3, 2.5E+2. Note that `e` is BOTH the constant and
+         the exponent marker; `1e-3` is 0.001 because the whole factor is
+         handed to `float()` first only when it is not a name in the table. *)
+
+(* Accepted, with values:
+
+       0.5              -> 0.5
+       pi               -> 3.141592653589793
+       -pi              -> -3.141592653589793
+       pi/2             -> 1.5707963267948966
+       3*pi/4           -> 2.356194490192345
+       tau/8            -> 0.7853981633974483
+       2*e              -> 5.43656365691809
+       1e-3             -> 0.001
+       0.1;0.2;0.3      -> [0.1, 0.2, 0.3]   (PAULI_CHANNEL px;py;pz)
+       theta=pi/4       -> [0.7853981633974483]
+
+   NOT accepted (evaluation fails; PARAM silently drops the item, and the
+   verifier then reports E-PARAM-001 if the gate required an angle):
+
+       pi/2 + 1         (no addition)
+       (pi+1)/2         (no parentheses)
+       2**3             (no exponentiation operator)
+       pi*pi            (only one named constant per token)
+       sqrt(2)          (no functions, no name lookup)                        *)
+
+
+(* -------------------------------------------------------------------------
+   10. The 22 columns, in canonical order
+   ------------------------------------------------------------------------- *)
+
+(*  index  column     usual cell form
+     0     ROW        identifier                (non-null)
+     1     FACE       one of lang.FACES         (non-null)
+     2     LANE       identifier | "-"
+     3     QSPACE     ref_cell with a range | "-"
+     4     OP         one of lang.ALL_OPS       (non-null)
+     5     OUT        ref_cell | identifier | "-"
+     6     CTRL       ref_cell | identifier | "-"
+     7     A          ref_cell | identifier | "-"
+     8     B          ref_cell | identifier | "-"
+     9     PARAM      number_cell | kv_cell | "-"
+    10     TYPE       one of lang.ALL_TYPES (optionally suffixed "[...]") | "-"
+    11     BASIS      "Z" | "X" | "Y" | identifier | "-"
+    12     REGIME     one of lang.REGIMES | "-"
+    13     ASSUME     list_cell | "-"
+    14     ERROR      kv_cell | "-"
+    15     RESOURCE   kv_cell | "-"
+    16     CONF       decimal in [0,1] | "-"
+    17     PROOF      identifier | "-"
+    -- 1.2+ distributed extension, additive and optional --
+    18     DOMAIN     identifier | "-"
+    19     NODE       identifier | "-"
+    20     LINK       identifier | "-"
+    21     FAMILY     one of lang.PARALLEL_FAMILIES | "-"                     *)
+
+
+(* -------------------------------------------------------------------------
+   11. Worked example
+   -------------------------------------------------------------------------
+
+   The following bundle parses with zero diagnostics and verifies
+   (`lang.verify(prog).ok == True`). It is the shape used by `smoke.py`.
+   Column separators are BROKEN BAR U+00A6.
+
+;; A two-lane Bell-pair program across two nodes of one execution domain.
+#PA-LCTL/1.6
+#PROFILE pa.lctl.quantum.parallel.distributed
+#NETWORK deny
+#BACKEND none
+#COLUMNS ROW¦FACE¦LANE¦QSPACE¦OP¦OUT¦CTRL¦A¦B¦PARAM¦TYPE¦BASIS¦REGIME¦ASSUME¦ERROR¦RESOURCE¦CONF¦PROOF¦DOMAIN¦NODE¦LINK¦FAMILY
+R000¦FEDERATION¦-¦-¦DECLARE_DOMAIN¦D0¦-¦-¦-¦-¦execution_domain¦-¦EXACT¦-¦-¦-¦1.0¦-¦-¦-¦-¦-
+R001¦TOPOLOGY¦-¦-¦DECLARE_NODE¦N0¦-¦-¦-¦-¦node¦-¦EXACT¦-¦-¦device=cpu¦1.0¦-¦D0¦-¦-¦-
+R002¦TOPOLOGY¦-¦-¦DECLARE_NODE¦N1¦-¦-¦-¦-¦node¦-¦EXACT¦-¦-¦device=cpu¦1.0¦-¦D0¦-¦-¦-
+R003¦TOPOLOGY¦-¦-¦DECLARE_LINK¦Q0¦-¦N0¦N1¦-¦quantum_link¦-¦EXACT¦-¦-¦fidelity=0.98¦1.0¦-¦D0¦-¦-¦-
+R010¦PREPARE¦L0¦q[0:2]¦PREP0¦q[0]¦-¦-¦-¦-¦qubit¦Z¦EXACT¦normalization¦-¦-¦1.0¦-¦D0¦N0¦-¦INSTRUCTION_PARALLEL
+R011¦PREPARE¦L0¦q[0:2]¦PREP0¦q[1]¦-¦-¦-¦-¦qubit¦Z¦EXACT¦normalization¦-¦-¦1.0¦-¦D0¦N0¦-¦INSTRUCTION_PARALLEL
+R012¦EXEC¦L0¦q[0:2]¦H¦-¦-¦q[0]¦-¦-¦unitary¦Z¦EXACT¦unitarity¦-¦-¦1.0¦-¦D0¦N0¦-¦INSTRUCTION_PARALLEL
+R013¦EXEC¦L0¦q[0:2]¦CX¦-¦q[0]¦q[1]¦-¦-¦unitary¦Z¦EXACT¦unitarity¦-¦-¦1.0¦-¦D0¦N0¦-¦INSTRUCTION_PARALLEL
+R014¦MEASURE¦L0¦q[0:2]¦MEASURE¦c0¦-¦q[0]¦-¦-¦measurement_result¦Z¦EXACT¦born_rule¦-¦-¦1.0¦-¦D0¦N0¦-¦-
+R015¦CONTROL¦L0¦-¦CLASSICAL_IF¦-¦c0¦-¦-¦-¦bit¦-¦EXACT¦-¦-¦-¦1.0¦-¦D0¦N0¦-¦-
+R020¦EXEC¦L1¦r[0:1]¦RZ¦-¦-¦r[0]¦-¦3*pi/4¦unitary¦Z¦EXACT¦unitarity¦-¦-¦1.0¦-¦D0¦N1¦-¦CIRCUIT_PARALLEL
+R021¦NOISE¦L1¦r[0:1]¦DEPOLARIZE¦-¦-¦r[0]¦-¦0.01¦channel¦-¦NOISY¦markovian;memoryless¦p=0.01;unit=probability;kind=failure_probability¦-¦0.9¦-¦D0¦N1¦-¦-
+
+   Reading the example row by row:
+
+     R000-R003  Declarations. `DECLARE_DOMAIN`, `DECLARE_NODE` and
+                `DECLARE_LINK` write into `VerifyResult.declared_domains`,
+                `.declared_nodes` and `.declared_links`; every later reference
+                to D0, N0, N1, Q0 is checked against them (E-DOM-001,
+                E-NODE-001, E-LINK-001).
+     R010-R011  `PREP0` is a reinit operation: it (re)establishes LIVE
+                ownership with a fresh lineage for q[0] and q[1].
+     R012       Single-qubit gate; `GATE_ARITY["H"] == 1`, one operand in A.
+     R013       Two-qubit gate; control in CTRL and target in A, disjoint, so
+                E-CTRL-001 does not fire.
+     R014       Destructive measurement: q[0] moves to state MEASURED and the
+                classical name `c0` is registered.
+     R015       Classical control referencing `c0`; had `c0` not been produced
+                by a prior measurement the verifier would emit E-CTL-003.
+     R020       A parametric rotation. PARAM `3*pi/4` evaluates to
+                2.356194490192345 via `_eval_number`; without a PARAM the
+                verifier would emit E-PARAM-001.
+     R021       A channel. Its REGIME is `NOISY`, not `EXACT`; declaring an
+                exact regime on an `lang.OPS_NOISE` operation is E-REG-002.
+                Its ERROR cell is a kv_cell that lifts into a typed
+                `erroralgebra.ErrorTerm`.
+
+   The same bundle written with "|" instead of the broken bar parses
+   identically, and `Program.canonical_text()` renders it back with broken
+   bars, so both spellings produce the same `Program.seal()`.
+   ------------------------------------------------------------------------- *)
+
+
+(* -------------------------------------------------------------------------
+   12. Grammar-level diagnostics
+   -------------------------------------------------------------------------
+
+     E-GRAM-001  ERROR   a data line contains no separator
+     E-GRAM-002  ERROR   cell count differs from the declared column count
+     E-GRAM-003  REJECT  duplicate ROW identity
+     E-GRAM-004  ERROR   missing bundle magic  (parse returns None)
+     E-GRAM-005  ERROR   the bundle contains no rows
+
+   All other diagnostics are produced by `lang.verify` or by the admission
+   pipeline; see DIAGNOSTIC_CATALOG.md.
+   ------------------------------------------------------------------------- *)
+
+
+(* -------------------------------------------------------------------------
+   13. Implementation status
+   -------------------------------------------------------------------------
+     Grammar and parser ............................. OPERATIONAL
+     Cell normalization ............................. OPERATIONAL
+     Indexed references ............................. OPERATIONAL
+     Numeric sandbox ................................ OPERATIONAL
+     Trailing (end-of-line) comments ................ not part of the language
+     Multi-line rows / continuations ................ not part of the language
+     Escaping a literal separator inside a cell ..... not part of the language;
+                                                      a cell may not contain
+                                                      the line's separator
+     Include / import of other bundles .............. not part of the language
+   ------------------------------------------------------------------------- *)

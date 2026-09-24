@@ -1,0 +1,11 @@
+# DF_Small -- declared toolchain (checked by ./VERIFY)
+# Install with: python -m pip install --only-binary=:all: -r REQUIREMENTS.txt
+# NumPy is required by pacore/fabric. Photon and PK checks use the standard library.
+numpy==2.2.6; python_version == '3.10'
+numpy==2.4.6; python_version == '3.11'
+numpy==2.5.3; python_version >= '3.12'
+# plus, for every node you want bound: that node container's REQUIREMENTS.txt
+# (DF_Small/DF_Small/DF_Large need a C11 compiler + make + OpenSSL; DF_Xtra_Large needs Java for
+#  column-verified compiles). Absent or unbuilt nodes are reported SKIPPED, not failed; ./RUN proceeds
+#  with the nodes that bind unless --strict.
+# No network: the fabric is executed on this host with local processes.

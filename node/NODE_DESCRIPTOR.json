@@ -1,0 +1,120 @@
+{
+  "adapter": {
+    "abi": "PA-LCTL/TARGET_ADAPTER/1",
+    "class": "SmallNodeAdapter",
+    "module": "adapter/dfabric/nodes.py",
+    "native_gate_set": [],
+    "version": "1.0.0"
+  },
+  "backend_policy": "none",
+  "bounds": {
+    "cli_step_budget": 4096,
+    "instruction_ceiling": 256,
+    "instructions_per_row": 3,
+    "max_rows_per_lowering": 84,
+    "prologue_epilogue": 4,
+    "qubits": 0,
+    "ram_per_live_vm_bytes_measured": 35926544,
+    "segmentation": "a bundle longer than max_rows_per_lowering is executed as a chain of segments; each segment starts from the previous accumulator",
+    "shots": 1
+  },
+  "capabilities": [
+    "classical",
+    "row_sequence_witness",
+    "bottle_rocket",
+    "mssl/asm-1"
+  ],
+  "container": "DF_Small",
+  "df_release": "DF-PA21.2-1.0.1",
+  "domain_id": "D_BR",
+  "execution_label": "CLASSICAL_NATIVE_VM_BOUNDED_EXECUTION",
+  "failure_domain": "FD_SMALL",
+  "feature_classes": {
+    "CX": "UNSUPPORTED",
+    "ENTANGLE_LINK": "UNSUPPORTED",
+    "H": "UNSUPPORTED",
+    "MEASURE": "UNSUPPORTED",
+    "PREP0": "UNSUPPORTED",
+    "TELEPORT": "UNSUPPORTED",
+    "apdu_serve": "TARGET_SPECIFIC",
+    "bounded_termination": "SUPPORTED",
+    "classical_face_execution": "UNSUPPORTED",
+    "compile_from_source": "SUPPORTED",
+    "declared_step_budget": "SUPPORTED",
+    "deterministic_replay": "SUPPORTED",
+    "image_signing": "SUPPORTED",
+    "independent_image_verification": "UNSUPPORTED",
+    "integer_arithmetic": "SUPPORTED",
+    "quantum_face_execution": "UNSUPPORTED",
+    "row_sequence_witness": "SUPPORTED_WITH_LIMITS",
+    "segmented_row_sequence_witness": "SUPPORTED",
+    "signature_checked_execution": "SUPPORTED",
+    "wide_word_arithmetic_1048576": "SUPPORTED"
+  },
+  "federation_id": "DF0",
+  "group_id": "G_BR3",
+  "network_policy": "deny",
+  "node_id": "N_SMALL",
+  "physical": {
+    "PHYSICAL_DISTRIBUTED_QPU_EXECUTION": "BLOCKED_EXTERNAL_AUTHORITY",
+    "PHYSICAL_PARALLEL_QPU_EXECUTION": "BLOCKED_EXTERNAL_AUTHORITY",
+    "physical_distributed": false,
+    "physical_parallel": false,
+    "physical_qpu": false,
+    "quantum_boundary": "QUANTUM_BOUNDARY_NOT_CROSSED"
+  },
+  "requirements": [
+    "C11 compiler (cc/gcc/clang)",
+    "GNU make",
+    "OpenSSL 3 libcrypto headers+lib (-lcrypto)",
+    "POSIX sh"
+  ],
+  "resource_limits": {
+    "bandwidth_bytes_per_tick": 1000000.0,
+    "cpu_slots": 1,
+    "ebit_budget": 0,
+    "memory_bytes": 35926544,
+    "qpu_slots": 0
+  },
+  "schema": "DF/NODE_DESCRIPTOR/1",
+  "self_reported": {
+    "blockers": [
+      "card target/AID",
+      "production trust authority",
+      "NVM/watchdog",
+      "hardware/security qualification",
+      "deployment authorization"
+    ],
+    "source": "MANIFEST.json / spec/PROFILE.md of the package (`MODEL_OPERATIONAL`; physical SIM/UICC `EXTERNAL_NOT_QUALIFIED`)"
+  },
+  "target_id": "bottle-rocket-3.0.0-model-local",
+  "trust_domain": "LOCAL_TRUSTED",
+  "vm": {
+    "guest_dialect": "MSSL/ASM-1",
+    "guest_ext": ".mssl",
+    "image_format": "BRIM/1-v3 (80-byte header, SHA-256 seal, Q17-MODEL-OPS-3 tag, optional Ed25519 signature; <= 51200 bytes)",
+    "isa": {
+      "arith_modes": [
+        "WRAP",
+        "CHECKED",
+        "SATURATE",
+        "TRAPPING"
+      ],
+      "capability_slots": 16,
+      "memory_bytes": 4096,
+      "name": "BRIM/1-v3 + APDU/1 + MSSL/ASM-1",
+      "opcodes": 24,
+      "registers": 16,
+      "stack_words": 256,
+      "word_bits": 1048576
+    },
+    "lineage": "BOTTLE_ROCKET",
+    "name": "BOTTLE ROCKET 3.0.0-MODEL (SIM-core model VM)",
+    "package_dir": "BOTTLE_ROCKET_3.0.0_MODEL_OPERATIONAL_110K",
+    "payload_tree_sha256": "1360081fb8a16c3bcf4d0e5d3c632308f82e7b35cf2a3daf73a2d330f4e07cba",
+    "result_register": "R2",
+    "runtime_contract": "BRIM/1-v3 + APDU/1 + MSSL/ASM-1; word 1,048,576 bits; 16 registers; 24 opcodes; 4 arithmetic modes; classification MODEL_OPERATIONAL",
+    "source_zip_sha256": "3fd95ec274d475d759d60832b413fbff9e3a8db5003da7e34a3c37d5b3b79fab"
+  },
+  "worker_id": "W_SMALL"
+}

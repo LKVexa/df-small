@@ -1,0 +1,309 @@
+{
+  "bounds": {
+    "default_step_budget": 4096,
+    "image_header_bytes": 80,
+    "instruction_bytes": 16,
+    "max_image_bytes": 51200,
+    "max_instructions_per_image": 256,
+    "memory_bytes": 4096,
+    "ram_per_vm_bytes": 35926544,
+    "registers": 16,
+    "service_budget": 64,
+    "stack_words": 256,
+    "update_fragment_bytes": 4096,
+    "update_total_bytes": 51200,
+    "word_bits": 1048576
+  },
+  "build_flags": "-std=c11 -O2 -Wall -Wextra -Werror -fno-common -fstack-protector-strong -Isrc -lcrypto (sanitize adds -O1 -g -fsanitize=address,undefined -fno-omit-frame-pointer)",
+  "bytes": 109905,
+  "capabilities": {
+    "compile_source": true,
+    "deterministic_replay": true,
+    "device_abi": true,
+    "sign_images": true,
+    "step_bound": true,
+    "trust_chain": true
+  },
+  "capability_notes": {
+    "device_abi": "Smart-card APDU/1 protocol + serve loop + br_platform read/write adapter; offline only, no network/telemetry.",
+    "sign_images": "Ed25519 host-evaluation keys only; no guest signing (verify-only SVC).",
+    "step_bound": "Default 4096-instruction budget; CLI run is fixed at 4096; APDU EXEC accepts a u32 budget; exhaustion -> trap 8 (BUDGET).",
+    "trust_chain": "Mechanism present and exercised (issuer-key admission, signature verify, version monotonicity, requested&allowlist grant), but the root/production trust authority, card target/AID, and deployment authorization are external and blocking."
+  },
+  "classification": {
+    "model": "MODEL_OPERATIONAL",
+    "physical": "EXTERNAL_NOT_QUALIFIED"
+  },
+  "cli_surface": [
+    "selftest",
+    "assemble SRC IMAGE [--image-version N]",
+    "inspect-image IMAGE",
+    "run IMAGE",
+    "keygen PRIVATE PUBLIC",
+    "sign-image INPUT OUTPUT PRIVATE",
+    "verify-image FILE PUBLIC",
+    "run-signed FILE PUBLIC",
+    "update SIGNED PUBLIC --state STATE",
+    "save-state STATE",
+    "recover-state STATE [PUBLIC]",
+    "status --state STATE",
+    "serve --state STATE [--issuer-public-key PUBLIC]"
+  ],
+  "container": "Small",
+  "dependencies": [
+    "POSIX",
+    "C11",
+    "GNU Make",
+    "OpenSSL 3 (-lcrypto: SHA256, EVP Ed25519, RAND_bytes, OPENSSL_cleanse)",
+    "GCC/Clang builtins (unsigned __int128, __builtin_clzll)"
+  ],
+  "df_release": "DF-PA21.2-1.0.0",
+  "entry_points": {
+    "build": "make",
+    "run": ".build/brctl run IMAGE",
+    "verify": "make clean operational && make sanitize"
+  },
+  "file_count": 20,
+  "files_of_note": [
+    "src/brvm.c",
+    "src/brasm.c",
+    "src/brvm.h",
+    "host/brctl.c",
+    "host/br_sizes.c",
+    "tests/test_main.c",
+    "examples/boot.mssl",
+    "deploy/BOTTLE_ROCKET_SIM_CORE_3.0.0_MODEL.brimg",
+    "spec/BR_SPEC.json",
+    "spec/PROFILE.md",
+    "src/CORE.mssl",
+    "MANIFEST.json",
+    "SHA256SUMS.txt",
+    "evidence/OPERATIONAL.json",
+    "evidence/AUDIT_DIGEST.json",
+    "evidence/SIZE.json",
+    "evidence/q17/SIDECAR.json"
+  ],
+  "guest_languages": [
+    "MSSL/ASM-1 (text assembly; directives .profile SIM_CORE, .image_version N, .request_caps A|B, optional .data OFFSET HEX)"
+  ],
+  "image_formats": [
+    "BRIM/1-v3 (80-byte header, SHA-256 seal @32, Q17-MODEL-OPS-3 tag @64, optional 64-byte Ed25519 signature; max 51200 bytes)"
+  ],
+  "isa": {
+    "arithmetic_modes": [
+      "WRAP",
+      "CHECKED",
+      "SATURATE",
+      "TRAPPING"
+    ],
+    "capabilities": 16,
+    "capability_bits": {
+      "ARITH": 2,
+      "CONTROL": 1,
+      "DIAG": 128,
+      "MEMORY": 4,
+      "SERVICE": 16,
+      "STACK": 8,
+      "STATE": 32,
+      "UPDATE": 64
+    },
+    "instruction_bytes": 16,
+    "instruction_encoding": "op,mode,rd,ra,rb,cap,flags(u16),imm(u64) little-endian",
+    "limbs_u64": 16384,
+    "memory_bytes": 4096,
+    "opcode_list": [
+      "NOP",
+      "MOVI",
+      "MOV",
+      "JMP",
+      "JZ",
+      "JNZ",
+      "HALT",
+      "ADD",
+      "SUB",
+      "MUL",
+      "DIVU",
+      "MODU",
+      "AND",
+      "OR",
+      "XOR",
+      "NOT",
+      "SHL",
+      "SHR",
+      "CMP",
+      "LOAD",
+      "STORE",
+      "PUSH",
+      "POP",
+      "SVC"
+    ],
+    "opcodes": 24,
+    "registers": 16,
+    "services": [
+      "YIELD",
+      "STATUS",
+      "REVOKE",
+      "DELEGATE",
+      "CONFIGURE",
+      "COMMIT",
+      "DIAG_EVENT",
+      "SHA256",
+      "ED25519_VERIFY"
+    ],
+    "stack_words": 256,
+    "status_values": {
+      "CANCELLED": 4,
+      "HALTED": 2,
+      "READY": 0,
+      "RUNNING": 1,
+      "TRAPPED": 3
+    },
+    "traps": [
+      "NONE",
+      "BAD_IMAGE",
+      "BAD_OPCODE",
+      "CAPABILITY",
+      "BOUNDS",
+      "OVERFLOW",
+      "DIV_ZERO",
+      "STACK",
+      "BUDGET",
+      "CANCEL",
+      "OOM",
+      "STATE",
+      "REPLAY",
+      "INTEGRITY",
+      "TRUST",
+      "PROTOCOL"
+    ],
+    "word_bits": 1048576,
+    "word_bytes": 131072
+  },
+  "measured_here": {
+    "build": {
+      "cmd": "make",
+      "exit": 0,
+      "notes": "warning-clean under -Werror; built brctl, br_tests, br_sizes",
+      "ok": true,
+      "seconds": 3.64
+    },
+    "example_run": {
+      "cmd": ".build/brctl run deploy/BOTTLE_ROCKET_SIM_CORE_3.0.0_MODEL.brimg",
+      "exit": 0,
+      "stdout_tail": "status=2 trap=0 ip=6 image_version=3 result=PASS\nR2.low64=42"
+    },
+    "extra_checks": [
+      {
+        "cmd": "assemble+run MUL 123456*1000",
+        "name": "custom_compute",
+        "result": "R2.low64=123456000 (exit 0)"
+      },
+      {
+        "cmd": "run infinite JMP loop",
+        "name": "step_bound_trap",
+        "result": "status=3 trap=8 (BUDGET) result=FAIL exit=1"
+      },
+      {
+        "cmd": "ADD without ARITH cap",
+        "name": "capability_trap",
+        "result": "status=3 trap=3 (CAPABILITY) exit=1"
+      },
+      {
+        "cmd": "assemble undefined-label",
+        "name": "assembler_reject",
+        "result": "MSSL assembly: FAIL exit=1"
+      },
+      {
+        "cmd": "assemble 257 vs 256 instructions",
+        "name": "max_code_bound",
+        "result": "257 rejected (exit 1); 256 accepted -> 4176-byte image"
+      }
+    ],
+    "gates": [
+      {
+        "cmd": "make test",
+        "exit": 0,
+        "name": "test",
+        "ok": true,
+        "seconds": 14.12,
+        "summary": "{\"suite\":\"BOTTLE_ROCKET_3.0.0_MODEL\",\"failures\":0,\"result\":\"PASS\"}"
+      },
+      {
+        "cmd": "make clean operational",
+        "exit": 0,
+        "name": "operational",
+        "ok": true,
+        "seconds": 27.2,
+        "summary": "All sub-gates PASS: test 0-fail; check-size BRIM 176<=51200; repro byte-identical; signed-smoke keygen/sign/verify/run-signed(R2=42)/update/recover/status/serve all PASS; check-dist-size 109905<110000"
+      },
+      {
+        "cmd": "make sanitize",
+        "exit": 0,
+        "name": "sanitize",
+        "ok": true,
+        "seconds": 19.42,
+        "summary": "ASan+UBSan: failures:0, no diagnostics"
+      }
+    ],
+    "integrity": {
+      "bad": 0,
+      "cmd": "sha256sum -c SHA256SUMS.txt",
+      "notes": "binds all 19 files except SHA256SUMS.txt itself",
+      "ok": 19
+    },
+    "reproducibility": {
+      "deploy_sha256": "5b5cfcebc2448c27590d61d15ec1d20b5192064e92c34fd6f3053c306d162f54",
+      "matches_manifest": true,
+      "rebuilt_bit_identical": true
+    }
+  },
+  "measured_toolchain": {
+    "cc": "gcc 13.3.0",
+    "make": "GNU Make 4.3",
+    "openssl": "3.0.13"
+  },
+  "note": "assembly-host profile; see VM_PROFILE_MEASURED.md",
+  "notes": [
+    "1,048,576-bit (128 KiB) registers/stack; full-width bignum ALU, but LOAD/STORE deliberately move only low 64 bits.",
+    "Each live VM allocates ~34.3 MB RAM (35,926,544 bytes) despite a 176-byte image -- budget accordingly for many concurrent fabric nodes.",
+    "Distribution size gate has only 95 bytes of headroom (109905/110000).",
+    "CLI result readback is hardwired to R2.low64; arbitrary readback needs serve + APDU STATE.",
+    "--image-version changes the BRIM header but not the payload SHA-256 seal (version is outside the sealed payload).",
+    "CLI 'run' is unauthenticated; signature/trust enforcement lives only on run-signed/update/serve paths.",
+    "Internal codename 'Q17': every image embeds ASCII tag 'Q17-MODEL-OPS-3' at offset 64; evidence/q17/ sidecar present.",
+    "Full canonical gate 'make clean operational && make sanitize' reproduced GREEN here; deploy image reproduced bit-for-bit; integrity 19/19 OK."
+  ],
+  "package_name": "BOTTLE_ROCKET_3.0.0_MODEL_OPERATIONAL_110K",
+  "programmatic_drive": {
+    "compile_cmd": ".build/brctl assemble prog.mssl prog.brimg [--image-version N]",
+    "result_parse": "stdout line 1: 'status=<u> trap=<u> ip=<u> image_version=<u> result=PASS|FAIL' (status=2 HALTED + trap=0 = success); line 2: 'R2.low64=<u64>' (guest result convention = register R2 low 64 bits). Exit 0 success / 1 fail / 2 bad-args. Arbitrary register/memory/stack readback (<=512B) via serve + APDU STATE {kind,index,offset:u32,length:u16}.",
+    "run_cmd": ".build/brctl run prog.brimg   (fixed 4096-step budget; for custom budget use APDU EXEC cmd 4 with u32 budget via serve, or C API br_vm_run(vm,budget))"
+  },
+  "runtime_contract": "Offline C11 SIM-core (smart-card/UICC-style) VM. ABI BRIM/1-v3 + APDU/1 + MSSL/ASM-1: wide-word ISA, 16-slot capability model, SHA-256-sealed and optionally Ed25519-signed BRIM images, 12-command APDU protocol, persistent host with dual-CRC state slots, atomic staged update, and verified recovery.",
+  "schema": "DF/VM_PROFILE/1",
+  "self_reported": {
+    "absent_by_design": [
+      "network",
+      "telemetry",
+      "desktop",
+      "cloud",
+      "guest signing",
+      "production authority"
+    ],
+    "brim_bytes": 176,
+    "brim_ceiling": 51200,
+    "dist_ceiling": 110000,
+    "dist_uncompressed_bytes": 109905,
+    "external_blockers": [
+      "card target/AID",
+      "production trust authority",
+      "NVM/watchdog",
+      "hardware/security qualification",
+      "deployment authorization"
+    ],
+    "model_gate": "PASS",
+    "physical_gate": "EXTERNAL_NOT_QUALIFIED"
+  },
+  "version": "3.0.0-MODEL",
+  "vm_name": "BOTTLE ROCKET"
+}

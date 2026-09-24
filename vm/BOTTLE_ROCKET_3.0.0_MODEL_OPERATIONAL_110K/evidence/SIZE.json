@@ -1,0 +1,1 @@
+{"record":"BOTTLE_ROCKET.ReleaseSize","version":"3.0.0-MODEL","uncompressed_bytes":109905,"ceiling":110000,"gate":"PASS","brim_bytes":176,"brim_ceiling":51200,"brim_gate":"PASS","method":"sum of regular files in clean release; build outputs excluded"}

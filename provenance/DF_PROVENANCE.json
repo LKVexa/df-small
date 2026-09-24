@@ -1,0 +1,62 @@
+{
+  "assembled_at_utc": "2026-08-17T01:30:36.243230Z",
+  "assembly_host": {
+    "backend_policy": "none",
+    "cc": "/usr/bin/cc",
+    "cpu_count": 2,
+    "gcc_version": "gcc (Ubuntu 13.3.0-6ubuntu2~24.04.1) 13.3.0",
+    "java": "/usr/bin/java",
+    "network_policy": "deny",
+    "note": "an isolated Linux cloud sandbox (Ubuntu 24.04, gcc 13.3, OpenSSL 3.0.13, Python 3.11.15, OpenJDK 21) -- the same toolchain family the VM audits and the PA21.x releases record",
+    "platform": "Linux-6.18.5-fc-v20-x86_64-with-glibc2.39",
+    "python": "3.11.15"
+  },
+  "designation": {
+    "core_version": "1.6.0-rc1",
+    "language": "PA-LCTL",
+    "release_of_corpora": "PA21.2 (folders as updated through PA21.31)"
+  },
+  "df_release": "DF-PA21.2-1.0.0",
+  "ladders": {
+    "distributed_state": "NOT_CLAIMED",
+    "parallel_state": "NOT_CLAIMED",
+    "physical_distributed": false,
+    "physical_parallel": false,
+    "physical_qpu": false,
+    "quantum_boundary": "QUANTUM_BOUNDARY_NOT_CROSSED",
+    "target_verified_meaning": "the native witness agreed with the CPython reference on this classical VM; not verification of any physical device"
+  },
+  "lineage": [
+    {
+      "from": "Desktop/VMs/Small.zip (sha256 3fd95ec274d475d759d60832b413fbff9e3a8db5003da7e34a3c37d5b3b79fab)",
+      "how": "extracted; no file edited; PAYLOAD_DIGEST.json pins every file",
+      "rule": "T1",
+      "step": 1,
+      "to": "vm/BOTTLE_ROCKET_3.0.0_MODEL_OPERATIONAL_110K/"
+    },
+    {
+      "from": "Desktop/PA21.2/PA_*_PA21.2 (the language corpora)",
+      "how": "core carried byte-identically; adapter written to the corpora's adapter ABI and in the shape of pacore.adapters.bottlerocket; bundles verified by pacore.lang",
+      "rule": "T2-T12",
+      "step": 2,
+      "to": "core/, adapter/, node/, spec/, fabric conventions"
+    },
+    {
+      "from": "the delivered bytes of this container",
+      "how": "adapter/dfabric/gates.py::run_node_battery on the assembly host, pre-seal",
+      "rule": "T6",
+      "step": 3,
+      "to": "conformance/DF_GATE_RESULTS.json"
+    },
+    {
+      "from": "the sealed container",
+      "how": "the launcher itself, after MANIFEST.json and SHA256SUMS.txt were written",
+      "rule": "T6",
+      "step": 4,
+      "to": "post-seal ./VERIFY record (delivery _assembly/ folder)"
+    }
+  ],
+  "node_id": "N_SMALL",
+  "package": "DF_Small",
+  "schema": "DF/PROVENANCE/1"
+}

@@ -1,0 +1,41 @@
+name: Validate release
+on: [push, pull_request]
+permissions:
+  contents: read
+jobs:
+  portable:
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, windows-latest]
+        python: ['3.10', '3.14']
+    runs-on: ${{ matrix.os }}
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7.0.0
+        with:
+          python-version: ${{ matrix.python }}
+      - run: python -B tools/validate_release.py
+  native:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7.0.0
+        with:
+          python-version: '3.12'
+      - name: Install declared dependencies
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y --no-install-recommends build-essential libssl-dev
+          python -m pip install --only-binary=:all: -r REQUIREMENTS.txt
+      - name: Verify native node and adapter gates
+        run: |
+          python -B adapter/dfabric/cli.py node-verify || {
+            tail -n 60 _runs/*_logs/own_*.log
+            exit 1
+          }
+      - name: Run native sanitizers and host regressions in a disposable copy
+        if: ${{ !cancelled() }}
+        run: python -B tools/validate_native.py

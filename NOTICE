@@ -1,0 +1,7 @@
+DF Small 1.0.1
+Copyright 2026 RUSSELL PHILIP SMITHSON
+
+Licensed under the Apache License, Version 2.0. See LICENSE.
+This distribution includes DF adapters and a hardened derivation of the
+BOTTLE ROCKET 3.0.0-MODEL teaching VM. Original provenance is retained.
+External NumPy and OpenSSL dependencies retain their own licenses and notices.
